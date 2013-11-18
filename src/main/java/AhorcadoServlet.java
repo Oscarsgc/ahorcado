@@ -11,8 +11,8 @@ public class AhorcadoServlet extends HttpServlet {
 //	protected void service(HttpServletRequest request,
 //			HttpServletResponse response) throws ServletException, IOException {
 //		String hasta = request.getParameter("hasta");
-//		FizzBuzz fb = new FizzBuzz();
-//		response.getWriter().println(fb.imprimir(Integer.parseInt(hasta)));
+//		Juego ahorcado = new Juego("Probando");
+//		response.getWriter().println(ahorcado.dibujarPalabra());
 //	}
 
 }

@@ -20,25 +20,24 @@ public class Juego {
 	public String ingresarLetra(char letra) {
 		int encontrado = palabra.buscarLetra(letra);
 		if (encontrado != -1) {
-			dibujarLetraEnPalabra(letra,encontrado);
+			dibujarLetraEnPalabra(letra, encontrado);
 			return dibujarPalabra();
-		}
-		else {
+		} else {
 			dibujarPalabra();
 			return mostrarMensajeError();
 		}
 	}
 
-	public void dibujarLetraEnPalabra(char letra, int pos){
+	public void dibujarLetraEnPalabra(char letra, int pos) {
 		char[] mostrada = palabraMostrada.toCharArray();
-		mostrada[pos*2] = letra;
+		mostrada[pos * 2] = letra;
 		palabraMostrada = "";
 		for (int i = 0; i < mostrada.length; i++) {
 			palabraMostrada += mostrada[i];
 		}
 	}
 
-	public String mostrarMensajeError(){
+	public String mostrarMensajeError() {
 		return "Letra no encontrada!";
 	}
 }
