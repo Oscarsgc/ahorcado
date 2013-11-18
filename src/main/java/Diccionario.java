@@ -22,8 +22,7 @@ public class Diccionario {
 				boolean encontrado = false;
 				while (!encontrado) {
 					random = 0 + (int) (Math.random() * ((15 - 0) + 1));
-					Palabra pal = diccionario.get(i).getPalabraEnPosicion(
-							random);
+					Palabra pal = diccionario.get(i).getPalabraEnPosicion(random);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
 						pal.setUso(true);
 						return pal;

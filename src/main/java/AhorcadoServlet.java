@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AhorcadoServlet extends HttpServlet {
 
-//	@Override
-//	protected void service(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException {
-//		String categoria = request.getParameter("categoria");
-//		String nivel = request.getParameter("basico");
-//		Palabra pal= 
-//		Juego ahorcado = new Juego("Probando");
-//		response.getWriter().println(ahorcado.dibujarPalabra());
-//	}
+	@Override
+	protected void service(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		Juego ahorcado = new Juego("Probando");
+		String categoria = request.getParameter("categoria");
+		String nivel = request.getParameter("basico");
+		ahorcado.obtenerPalabraDeDiccionario(Integer.parseInt(nivel), categoria);
+		response.getWriter().println(ahorcado.dibujarPalabra());
+	}
 
 }
