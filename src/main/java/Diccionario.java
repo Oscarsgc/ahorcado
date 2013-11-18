@@ -22,7 +22,8 @@ public class Diccionario {
 				boolean encontrado = false;
 				while (!encontrado) {
 					random = 0 + (int) (Math.random() * ((15 - 0) + 1));
-					Palabra pal = diccionario.get(i).getPalabraEnPosicion(random);
+					Palabra pal = diccionario.get(i).getPalabraEnPosicion(
+							random);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
 						pal.setUso(true);
 						return pal;
@@ -42,7 +43,7 @@ public class Diccionario {
 	}
 
 	public void llenarDiccionario() {
-		ListaDePalabras paises = new ListaDePalabras();
+		ListaDePalabras paises = new ListaDePalabras("Paises");
 		paises.agregarPalabra(new Palabra("Afganistan", 2, false));
 		paises.agregarPalabra(new Palabra("Bahamas", 1, false));
 		paises.agregarPalabra(new Palabra("Bolivia", 1, false));
@@ -59,7 +60,7 @@ public class Diccionario {
 		paises.agregarPalabra(new Palabra("Tanganica", 3, false));
 		paises.agregarPalabra(new Palabra("Yemen", 3, false));
 
-		ListaDePalabras peliculas = new ListaDePalabras();
+		ListaDePalabras peliculas = new ListaDePalabras("Peliculas");
 		peliculas.agregarPalabra(new Palabra("ToyStory", 1, false));
 		peliculas.agregarPalabra(new Palabra("LaMomia", 1, false));
 		peliculas.agregarPalabra(new Palabra("Argo", 1, false));
@@ -76,7 +77,7 @@ public class Diccionario {
 		peliculas.agregarPalabra(new Palabra("LosJuegosDelHambre", 3, false));
 		peliculas.agregarPalabra(new Palabra("DiaroDeUnaPasion", 3, false));
 
-		ListaDePalabras seriesTV = new ListaDePalabras();
+		ListaDePalabras seriesTV = new ListaDePalabras("SeriesTV");
 		seriesTV.agregarPalabra(new Palabra("Friends", 1, false));
 		seriesTV.agregarPalabra(new Palabra("Mom", 1, false));
 		seriesTV.agregarPalabra(new Palabra("Arrow", 1, false));
