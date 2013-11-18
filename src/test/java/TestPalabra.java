@@ -1,56 +1,40 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.Before;
 
 public class TestPalabra {
-	Palabra palabra = new Palabra();
+	Palabra palabra;
 
-	@Test
-	public void crearPalabraNivelFacil() {
-		palabra = new Palabra("Prueba", 0, false);
-		assertEquals(0, palabra.getDificultad());
+	@Before
+	public void palabraPrueba(){
+		palabra = new Palabra("Prueba");
 	}
 
 	@Test
-	public void crearPalabraNivelMedio() {
-		palabra = new Palabra("Prueba", 1, false);
-		assertEquals(1, palabra.getDificultad());
+	public void getPalabra() {
+		assertEquals("Prueba", palabra.getPalabra());
 	}
 
 	@Test
-	public void crearPalabraNivelDificil() {
-		palabra = new Palabra("Prueba", 2, false);
-		assertEquals(2, palabra.getDificultad());
+	public void setPalabra() {
+		palabra.setPalabra("Pruebita");
+		assertEquals("Pruebita", palabra.getPalabra());
 	}
 
 	@Test
-	public void buscarLetraEnPalabra() {
-		palabra = new Palabra("Prueba", 2, false);
-		assertEquals(true, palabra.buscarLetra('b'));
-		assertEquals(false, palabra.buscarLetra('x'));
+	public void buscarLetraDevuelvePosicionSiExiste() {
+		assertEquals(4, palabra.buscarLetra('b'));
 	}
 
 	@Test
-	public void dibujarEspaciosParaPalabra() {
-		palabra = new Palabra("Prueba", 2, false);
+	public void buscarLetraDevuelveNegativoSiNOExiste() {
+		assertEquals(-1, palabra.buscarLetra('x'));
+	}
+
+	@Test
+	public void dibujarPalabraVacia() {
 		assertEquals("_ _ _ _ _ _ ", palabra.dibujarPalabraVacia());
 	}
 
-	@Test
-	public void dibujarLetraSiExiste() {
-		palabra = new Palabra("Prueba", 2, false);
-		assertEquals(
-				"_ r _ _ _ _ ",
-				palabra.buscarLetraEnPalabra('r', palabra.getPalabra(),
-						palabra.dibujarPalabraVacia()));
-	}
-	
-	@Test
-	public void errorSiLetraNoExiste() {
-		palabra = new Palabra("Prueba", 2, false);
-		assertEquals(
-				"Letra no encontrada!",
-				palabra.buscarLetraEnPalabra('x', palabra.getPalabra(),
-						palabra.dibujarPalabraVacia()));
-	}
 }

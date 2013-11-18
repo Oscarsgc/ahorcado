@@ -1,20 +1,21 @@
 public class Palabra {
 
 	private String palabra;
-	private int dificultad;
-	private boolean usado;
+	private String categoria;
 
 	public Palabra() {
 		this.palabra = "";
-		this.dificultad = -1;
-		this.usado = false;
-
+		this.categoria = "";
 	}
 
-	public Palabra(String palabra, int dificultad, boolean usado) {
+	public Palabra(String palabra) {
 		this.palabra = palabra;
-		this.dificultad = dificultad;
-		this.usado = usado;
+		this.categoria = "";
+	}
+
+	public Palabra(String palabra, String categoria) {
+		this.palabra = palabra;
+		this.categoria = categoria;
 	}
 
 	public String getPalabra() {
@@ -25,60 +26,31 @@ public class Palabra {
 		this.palabra = palabra;
 	}
 
-	public int getDificultad() {
-		return dificultad;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setDificultad(int dificultad) {
-		this.dificultad = dificultad;
-	}
-
-	public boolean isUsado() {
-		return usado;
-	}
-
-	public void setUsado(boolean usado) {
-		this.usado = usado;
-	}
-
-	public boolean buscarLetra(char c) {
-		if (palabra.indexOf(c) >= 0) {
-			return true;
-		} else {
-			return false;
-		}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public String dibujarPalabraVacia() {
-		String palabraVacia = "";
+		String palabraMostrada = "";
 		for (int i = 0; i < this.palabra.length(); i++) {
-			palabraVacia = palabraVacia + '_' + ' ';
+			palabraMostrada = palabraMostrada + '_' + ' ';
 		}
-		// System.out.println(palabraVacia);
-		return palabraVacia;
+		return palabraMostrada;
 	}
 
-	public String buscarLetraEnPalabra(char letra, String palabra,
-			String palabraVacia) {
-		String res = "";
-		boolean encontrado = false;
-		char[] aux = palabra.toCharArray();
-		char[] empty = palabraVacia.toCharArray();
-		for (int i = 0; i < aux.length; i++) {
-			if (aux[i] == letra) {
-				empty[i * 2] = letra;
-				encontrado = true;
+	public int buscarLetra(char letra) {
+		int res = -1;
+		char[] word = palabra.toCharArray();
+		for (int i = 0; i < word.length && res == -1; i++) {
+			if (word[i] == letra) {
+				res = i;
 			}
 		}
-		for (int i = 0; i < empty.length; i++) {
-			res = res + empty[i];
-		}
-		if (encontrado == false) {
-			res = "Letra no encontrada!";
-		}
-		// System.out.println(res);
 		return res;
-
 	}
 
 }
