@@ -1,21 +1,42 @@
 public class Palabra {
 
 	private String palabra;
-	private String categoria;
+	private int dificultad;
+	private boolean uso;
 
 	public Palabra() {
 		this.palabra = "";
-		this.categoria = "";
+		this.dificultad = -1;
+		this.uso = false;
 	}
 
 	public Palabra(String palabra) {
 		this.palabra = palabra;
-		this.categoria = "";
+		this.dificultad = -1;
+		this.uso = false;
 	}
 
-	public Palabra(String palabra, String categoria) {
+	public Palabra(String palabra, int dificultad, boolean uso) {
 		this.palabra = palabra;
-		this.categoria = categoria;
+		this.dificultad = dificultad;
+		this.uso = uso;
+
+	}
+
+	public int getDificultad() {
+		return dificultad;
+	}
+
+	public void setDificultad(int dificultad) {
+		this.dificultad = dificultad;
+	}
+
+	public boolean isUso() {
+		return uso;
+	}
+
+	public void setUso(boolean uso) {
+		this.uso = uso;
 	}
 
 	public String getPalabra() {
@@ -24,14 +45,6 @@ public class Palabra {
 
 	public void setPalabra(String palabra) {
 		this.palabra = palabra;
-	}
-
-	public String getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
 	}
 
 	public String dibujarPalabraVacia() {

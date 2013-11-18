@@ -7,7 +7,7 @@ public class TestPalabra {
 	Palabra palabra;
 
 	@Before
-	public void palabraPrueba(){
+	public void palabraPrueba() {
 		palabra = new Palabra("Prueba");
 	}
 
