@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Diccionario {
 	private int listQty;
@@ -12,6 +13,25 @@ public class Diccionario {
 	public void addList(ListaDePalabras listaPalabras) {
 		diccionario.add(listaPalabras);
 		listQty++;
+	}
+
+	public Palabra palabraAleatoriaPorCategoria(String categoria, int nivel) {
+		int random;
+		for (int i = 0; i < diccionario.size(); i++) {
+			if (diccionario.get(i).getCategoria() == categoria) {
+				boolean encontrado = false;
+				while (!encontrado) {
+					random = 0 + (int) (Math.random() * ((15 - 0) + 1));
+					Palabra pal = diccionario.get(i).getPalabraEnPosicion(
+							random);
+					if (pal.getDificultad() == nivel && !pal.getUso()) {
+						pal.setUso(true);
+						return pal;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public int getListQty() {
@@ -39,7 +59,7 @@ public class Diccionario {
 		paises.agregarPalabra(new Palabra("Somalia", 3, false));
 		paises.agregarPalabra(new Palabra("Tanganica", 3, false));
 		paises.agregarPalabra(new Palabra("Yemen", 3, false));
-		
+
 		ListaDePalabras peliculas = new ListaDePalabras();
 		peliculas.agregarPalabra(new Palabra("ToyStory", 1, false));
 		peliculas.agregarPalabra(new Palabra("LaMomia", 1, false));
@@ -56,24 +76,24 @@ public class Diccionario {
 		peliculas.agregarPalabra(new Palabra("LaPasionDeCristo", 3, false));
 		peliculas.agregarPalabra(new Palabra("LosJuegosDelHambre", 3, false));
 		peliculas.agregarPalabra(new Palabra("DiaroDeUnaPasion", 3, false));
-		
+
 		ListaDePalabras seriesTV = new ListaDePalabras();
-		seriesTV.agregarPalabra(new Palabra("Friends",1,false));
-		seriesTV.agregarPalabra(new Palabra("Mom",1,false));
-		seriesTV.agregarPalabra(new Palabra("Arrow",1,false));
-		seriesTV.agregarPalabra(new Palabra("Glee",1,false));
-		seriesTV.agregarPalabra(new Palabra("Hostages",1,false));
-		seriesTV.agregarPalabra(new Palabra("LosSimpson",2,false));
-		seriesTV.agregarPalabra(new Palabra("ModernFamily",2,false));
-		seriesTV.agregarPalabra(new Palabra("Vikingos",2,false));
-		seriesTV.agregarPalabra(new Palabra("Homeland",2,false));
-		seriesTV.agregarPalabra(new Palabra("Supercampeones",2,false));
-		seriesTV.agregarPalabra(new Palabra("TheBigBangTheory",3,false));
-		seriesTV.agregarPalabra(new Palabra("Supernatural",3,false));
-		seriesTV.agregarPalabra(new Palabra("TheFollowing",3,false));
-		seriesTV.agregarPalabra(new Palabra("BreakingBad",3,false));
-		seriesTV.agregarPalabra(new Palabra("AgentsOfShield",3,false));
-		
+		seriesTV.agregarPalabra(new Palabra("Friends", 1, false));
+		seriesTV.agregarPalabra(new Palabra("Mom", 1, false));
+		seriesTV.agregarPalabra(new Palabra("Arrow", 1, false));
+		seriesTV.agregarPalabra(new Palabra("Glee", 1, false));
+		seriesTV.agregarPalabra(new Palabra("Hostages", 1, false));
+		seriesTV.agregarPalabra(new Palabra("LosSimpson", 2, false));
+		seriesTV.agregarPalabra(new Palabra("ModernFamily", 2, false));
+		seriesTV.agregarPalabra(new Palabra("Vikingos", 2, false));
+		seriesTV.agregarPalabra(new Palabra("Homeland", 2, false));
+		seriesTV.agregarPalabra(new Palabra("Supercampeones", 2, false));
+		seriesTV.agregarPalabra(new Palabra("TheBigBangTheory", 3, false));
+		seriesTV.agregarPalabra(new Palabra("Supernatural", 3, false));
+		seriesTV.agregarPalabra(new Palabra("TheFollowing", 3, false));
+		seriesTV.agregarPalabra(new Palabra("BreakingBad", 3, false));
+		seriesTV.agregarPalabra(new Palabra("AgentsOfShield", 3, false));
+
 		addList(paises);
 		addList(peliculas);
 		addList(seriesTV);

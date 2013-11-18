@@ -10,7 +10,9 @@ public class AhorcadoServlet extends HttpServlet {
 //	@Override
 //	protected void service(HttpServletRequest request,
 //			HttpServletResponse response) throws ServletException, IOException {
-//		String hasta = request.getParameter("hasta");
+//		String categoria = request.getParameter("categoria");
+//		String nivel = request.getParameter("basico");
+//		Palabra pal= 
 //		Juego ahorcado = new Juego("Probando");
 //		response.getWriter().println(ahorcado.dibujarPalabra());
 //	}

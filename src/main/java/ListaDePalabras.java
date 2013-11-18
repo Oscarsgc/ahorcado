@@ -12,6 +12,8 @@ public class ListaDePalabras {
 	public void setPalabras(ArrayList<Palabra> palabras) {
 		this.palabras = palabras;
 	}
+	
+	
 
 	public ListaDePalabras() {
 		this.categoria = "";
@@ -31,6 +33,10 @@ public class ListaDePalabras {
 		this.cantidadPalabras = cantidadPalabras;
 	}
 
+	public Palabra getPalabraEnPosicion(int pos){
+		return this.palabras.get(pos);
+	}
+	
 	public String getCategoria() {
 		return categoria;
 	}

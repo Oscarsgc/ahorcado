@@ -31,7 +31,7 @@ public class Palabra {
 		this.dificultad = dificultad;
 	}
 
-	public boolean isUso() {
+	public boolean getUso() {
 		return uso;
 	}
 

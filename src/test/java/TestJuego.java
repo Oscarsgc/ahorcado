@@ -28,6 +28,9 @@ public class TestJuego {
     public void dibujarLetraSiExiste() {
         juego.ingresarLetra('r');
         assertEquals("_ r _ _ _ _ ", juego.dibujarPalabra());
+        juego=new Juego("Correr");
+        juego.ingresarLetra('r');
+        assertEquals("_ _ r r _ r ", juego.dibujarPalabra());
     }
 
     @Test
