@@ -16,5 +16,12 @@ public class TestDiccionario {
 		diccionario.addList(listaPalabras);
 		assertEquals(1, diccionario.getListQty());
 	}
+	
+	@Test
+	public void seleccionarPalabraAleatoria(){
+		diccionario.llenarDiccionario();
+		
+		assertEquals("ToyStory", diccionario.palabraAleatoriaPorCategoria("Peliculas", 1).getPalabra());
+	}
 
 }

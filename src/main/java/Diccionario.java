@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Diccionario {
 	private int listQty;
@@ -16,18 +15,21 @@ public class Diccionario {
 	}
 
 	public Palabra palabraAleatoriaPorCategoria(String categoria, int nivel) {
-		int random;
+		//int random;
 		for (int i = 0; i < diccionario.size(); i++) {
 			if (diccionario.get(i).getCategoria() == categoria) {
 				boolean encontrado = false;
+				int pos = 0;
 				while (!encontrado) {
-					random = 0 + (int) (Math.random() * ((15 - 0) + 1));
+					/*random = 0 + (int) (Math.random() * ((15 - 0) + 1));
 					Palabra pal = diccionario.get(i).getPalabraEnPosicion(
-							random);
+							random);*/
+					Palabra pal = diccionario.get(i).getPalabraEnPosicion(pos);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
 						pal.setUso(true);
 						return pal;
 					}
+					pos++;
 				}
 			}
 		}

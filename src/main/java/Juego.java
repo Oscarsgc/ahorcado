@@ -14,7 +14,7 @@ public class Juego {
 	public Juego(int nivel, String categoria) {
 		this.diccionario.llenarDiccionario();
 		this.palabra = obtenerPalabraDeDiccionario(nivel, categoria);
-		//this.palabraMostrada = this.palabra.dibujarPalabraVacia();
+		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
 
 	}
 
@@ -27,12 +27,17 @@ public class Juego {
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 
 	}
+	
+	public void setPalabraMostrada(String palabra) {
+		this.palabraMostrada = palabra;
+
+	}
 
 	public Palabra obtenerPalabraDeDiccionario(int nivel, String categoria) {
-		Palabra word = diccionario.palabraAleatoriaPorCategoria(categoria,
+		palabra = diccionario.palabraAleatoriaPorCategoria(categoria,
 				nivel);
-		this.palabraMostrada = word.dibujarPalabraVacia();
-		return word;
+		this.palabraMostrada = palabra.dibujarPalabraVacia();
+		return palabra;
 	}
 
 	public Juego(String palabra) {
