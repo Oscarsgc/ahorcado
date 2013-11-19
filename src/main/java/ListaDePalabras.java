@@ -61,7 +61,7 @@ public class ListaDePalabras {
 		String res = "";
 		for (Palabra word : palabras) {
 			System.out.println(word.getPalabra());
-			res = res + word.getPalabra();
+			res = res + word.getPalabra() + '\n';
 		}
 		return res;
 	}
