@@ -18,23 +18,29 @@ public class AhorcadoServlet extends HttpServlet {
 
 		/*String categoria = request.getParameter("categoria");
 		String nivel = request.getParameter("nivel");*/
+		char letra = request.getParameter("letra").charAt(0);
 		Juego ahorcado = new Juego("hola");
 		
 		File archivo = new File ("archivo.txt");
 		FileReader fr = new FileReader (archivo);
 		BufferedReader br = new BufferedReader(fr);
 		String dibujada = br.readLine();
-		if(dibujada != " ")
+		if(dibujada == null)
+			dibujada = ahorcado.dibujarPalabra();
+		else
 			ahorcado.setPalabraMostrada(dibujada);
-		archivo = new File ("archivo.txt");
+		fr.close();
 		FileWriter fw = new FileWriter(archivo);
 		PrintWriter pw = new PrintWriter(fw);
 
 		//Juego ahorcado = new Juego(Integer.parseInt(nivel), categoria);
-		 //ahorcado.obtenerPalabraDeDiccionario(Integer.parseInt(nivel),categoria);
+		//ahorcado.obtenerPalabraDeDiccionario(Integer.parseInt(nivel),categoria);
+		ahorcado.ingresarLetra(letra);
+		
 		String salida = ahorcado.dibujarPalabra();
 		response.getWriter().println(ahorcado.dibujarPalabra());
 		pw.println(salida);
+		pw.close();
 		response.sendRedirect("ingresar_letra.html");
 	}
 
