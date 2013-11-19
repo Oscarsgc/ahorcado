@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AhorcadoServlet extends HttpServlet {
 
+	Juego ahorcado = new Juego(3,"Paises");
+
 	@Override
 	protected void service(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -19,7 +21,7 @@ public class AhorcadoServlet extends HttpServlet {
 		/*String categoria = request.getParameter("categoria");
 		String nivel = request.getParameter("nivel");*/
 		char letra = request.getParameter("letra").charAt(0);
-		Juego ahorcado = new Juego("hola");
+		//Juego ahorcado = new Juego("hola");
 		
 		File archivo = new File ("archivo.txt");
 		FileReader fr = new FileReader (archivo);
@@ -35,13 +37,20 @@ public class AhorcadoServlet extends HttpServlet {
 
 		//Juego ahorcado = new Juego(Integer.parseInt(nivel), categoria);
 		//ahorcado.obtenerPalabraDeDiccionario(Integer.parseInt(nivel),categoria);
-		ahorcado.ingresarLetra(letra);
+		String res = ahorcado.ingresarLetra(letra);
 		
 		String salida = ahorcado.dibujarPalabra();
-		response.getWriter().println(ahorcado.dibujarPalabra());
+		
+		if (res==salida)
+			response.getWriter().println(ahorcado.dibujarPalabra());
+		else
+		{
+			response.getWriter().println(ahorcado.dibujarPalabra());
+			response.getWriter().println(res);
+		}
 		pw.println(salida);
 		pw.close();
-		response.sendRedirect("ingresar_letra.html");
+		//response.sendRedirect("ingresar_letra.html");
 	}
 
 }
