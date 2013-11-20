@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AhorcadoServlet extends HttpServlet {
 
-	Juego ahorcado = new Juego(3,"Paises");
+	Juego ahorcado = new Juego(1,"Paises");
 
 	@Override
 	protected void service(HttpServletRequest request,
