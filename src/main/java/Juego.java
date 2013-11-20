@@ -27,15 +27,14 @@ public class Juego {
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 
 	}
-	
+
 	public void setPalabraMostrada(String palabra) {
 		this.palabraMostrada = palabra;
 
 	}
 
 	public Palabra obtenerPalabraDeDiccionario(int nivel, String categoria) {
-		palabra = diccionario.palabraAleatoriaPorCategoria(categoria,
-				nivel);
+		palabra = diccionario.palabraAleatoriaPorCategoria(categoria, nivel);
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 		return palabra;
 	}
@@ -82,5 +81,30 @@ public class Juego {
 
 	public String mostrarMensajeError() {
 		return "Letra no encontrada!";
+	}
+
+	public void agregarPalabraAlDiccionario(String pal, int nivel,
+			String categoria) {
+		diccionario.agregarPalabra(pal, nivel, categoria);
+	}
+
+	public Diccionario getDiccionario() {
+		return diccionario;
+	}
+
+	public void setDiccionario(Diccionario diccionario) {
+		this.diccionario = diccionario;
+	}
+
+	public String getPalabraMostrada() {
+		return palabraMostrada;
+	}
+
+	public String mostrarPalabrasDiccionario() {
+		String res = "";
+		for (int i = 0; i < diccionario.getDiccionario().size(); i++) {
+			res = res + diccionario.getDiccionario().get(i).mostrarLista();
+		}
+		return res;
 	}
 }

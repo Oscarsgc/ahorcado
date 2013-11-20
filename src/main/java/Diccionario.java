@@ -1,6 +1,14 @@
 import java.util.ArrayList;
 
 public class Diccionario {
+	public ArrayList<ListaDePalabras> getDiccionario() {
+		return diccionario;
+	}
+
+	public void setDiccionario(ArrayList<ListaDePalabras> diccionario) {
+		this.diccionario = diccionario;
+	}
+
 	private int listQty;
 	private ArrayList<ListaDePalabras> diccionario;
 
@@ -15,15 +23,17 @@ public class Diccionario {
 	}
 
 	public Palabra palabraAleatoriaPorCategoria(String categoria, int nivel) {
-		//int random;
+		// int random;
 		for (int i = 0; i < diccionario.size(); i++) {
 			if (diccionario.get(i).getCategoria() == categoria) {
 				boolean encontrado = false;
 				int pos = 0;
 				while (!encontrado) {
-					/*random = 0 + (int) (Math.random() * ((15 - 0) + 1));
-					Palabra pal = diccionario.get(i).getPalabraEnPosicion(
-							random);*/
+					/*
+					 * random = 0 + (int) (Math.random() * ((15 - 0) + 1));
+					 * Palabra pal = diccionario.get(i).getPalabraEnPosicion(
+					 * random);
+					 */
 					Palabra pal = diccionario.get(i).getPalabraEnPosicion(pos);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
 						pal.setUso(true);
@@ -101,4 +111,12 @@ public class Diccionario {
 		addList(seriesTV);
 	}
 
+	public void agregarPalabra(String pal, int nivel, String categoria) {
+		for (int i = 0; i < this.diccionario.size(); i++) {
+			if (this.diccionario.get(i).getCategoria() == categoria) {
+				this.diccionario.get(i).agregarPalabra(
+						new Palabra(pal, nivel, false));
+			}
+		}
+	}
 }
