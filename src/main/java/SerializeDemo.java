@@ -15,7 +15,7 @@ public class SerializeDemo
 	         out.writeObject(p);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Serialized data is saved in palabra.ser");
+	         System.out.println("Serialized data is saved in palabra.ser");
 	      }catch(IOException i)
 	      {
 	          i.printStackTrace();
