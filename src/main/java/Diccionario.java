@@ -32,7 +32,6 @@ public class Diccionario {
 				while (!encontrado) {
 					Palabra pal = diccionario.get(i).getPalabraEnPosicion(pos);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
-
 						pal.setUso(true);
 						return pal;
 					}
@@ -110,9 +109,8 @@ public class Diccionario {
 
 	public void agregarPalabra(String pal, int nivel, String categoria) {
 		for (int i = 0; i < this.diccionario.size(); i++) {
-			if (this.diccionario.get(i).getCategoria() == categoria) {
-				this.diccionario.get(i).agregarPalabra(
-						new Palabra(pal, nivel, false));
+			if (this.diccionario.get(i).getCategoria().equals(categoria)) {
+				this.diccionario.get(i).agregarPalabra(new Palabra(pal, nivel, false));
 			}
 		}
 	}
