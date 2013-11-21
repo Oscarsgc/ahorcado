@@ -3,6 +3,7 @@ public class Palabra implements java.io.Serializable {
 	private String palabra;
 	private int dificultad;
 	private boolean uso;
+	private int cantPistas;
 
 	public Palabra() {
 		this.palabra = "";
@@ -64,6 +65,22 @@ public class Palabra implements java.io.Serializable {
 			}
 		}
 		return res;
+	}
+	
+	public int calcularCantidadPistasPorPalabra() {
+		int tamanioPal = palabra.length();
+		if (tamanioPal % 2 == 0) {
+			this.cantPistas = (tamanioPal / 2) - 1;
+		} else {
+			this.cantPistas = tamanioPal / 2;
+		}
+		return this.cantPistas;
+	}
+	
+	public char obtenerUnaPista() {
+		char[] arreglo = palabra.toCharArray();
+		int random = 0 + (int) (Math.random() * ((palabra.length() - 1) + 1));
+		return arreglo[random];
 	}
 
 }
