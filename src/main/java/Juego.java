@@ -3,12 +3,13 @@ public class Juego {
 	private Palabra palabra = new Palabra();
 	private String palabraMostrada = new String();
 	private Diccionario diccionario = new Diccionario();
+	private Pista pistas;
 
 	public Juego() {
 		// this.diccionario.llenarDiccionario();
 		this.palabra = new Palabra();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
-
+		this.pistas = new Pista();
 	}
 
 	// public Juego(int nivel, String categoria) {
@@ -17,6 +18,14 @@ public class Juego {
 	// this.palabraMostrada = this.palabra.dibujarPalabraVacia();
 	//
 	// }
+
+	public Pista getPistas() {
+		return pistas;
+	}
+
+	public void setPistas(Pista pistas) {
+		this.pistas = pistas;
+	}
 
 	public Palabra getPalabra() {
 		return palabra;
