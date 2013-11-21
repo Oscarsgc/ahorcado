@@ -34,7 +34,7 @@ public class Juego {
 	}
 
 	public Palabra obtenerPalabraDeDiccionario(int nivel, String categoria) {
-		palabra = diccionario.palabraAleatoriaPorCategoria(categoria, nivel);
+		palabra = diccionario.obtenerPalabra(categoria, nivel);
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 		return palabra;
 	}

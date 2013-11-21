@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AhorcadoServlet extends HttpServlet {
 
 	Juego ahorcado = new Juego();
-	// final Diccionario dic = new Diccionario();
 	String category = "";
 	int level = 0;
 	String dibujada = "";
@@ -40,7 +39,6 @@ public class AhorcadoServlet extends HttpServlet {
 		}
 
 		String car = request.getParameter("letra");
-		// String salida = ahorcado.dibujarPalabra();
 		String res;
 
 		if (car != null && !car.isEmpty()) {
@@ -55,7 +53,6 @@ public class AhorcadoServlet extends HttpServlet {
 			}
 		}
 
-		// dibujada = salida;
 		response.getWriter().println(ahorcado.dibujarPalabra());
 
 		out.println("</br>");

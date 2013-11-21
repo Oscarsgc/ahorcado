@@ -3,34 +3,28 @@ import java.util.ArrayList;
 public class ListaDePalabras {
 	private String categoria;
 	private ArrayList<Palabra> palabras;
-	private int cantidadPalabras;
-
-	public ArrayList<Palabra> getPalabras() {
-		return palabras;
-	}
-
-	public void setPalabras(ArrayList<Palabra> palabras) {
-		this.palabras = palabras;
-	}
 
 	public ListaDePalabras() {
 		this.categoria = "";
 		this.palabras = new ArrayList<Palabra>();
-		this.cantidadPalabras = 0;
 	}
 
 	public ListaDePalabras(String categoria) {
 		this.categoria = categoria;
 		this.palabras = new ArrayList<Palabra>();
-		this.cantidadPalabras = 0;
 	}
+
+	public ArrayList<Palabra> getPalabras() {
+		return palabras;
+	}
+
+	/*
+	 * public void setPalabras(ArrayList<Palabra> palabras) { this.palabras =
+	 * palabras; }
+	 */
 
 	public int getCantidadPalabras() {
-		return cantidadPalabras;
-	}
-
-	public void setCantidadPalabras(int cantidadPalabras) {
-		this.cantidadPalabras = cantidadPalabras;
+		return palabras.size();
 	}
 
 	public Palabra getPalabraEnPosicion(int pos) {
@@ -47,14 +41,11 @@ public class ListaDePalabras {
 
 	public void agregarPalabra(Palabra palabra) {
 		palabras.add(palabra);
-		cantidadPalabras++;
 
 	}
 
 	public void eliminarPalabra(Palabra palabra) {
 		palabras.remove(palabra);
-		cantidadPalabras--;
-
 	}
 
 	public String mostrarLista() {
@@ -73,5 +64,17 @@ public class ListaDePalabras {
 			}
 		}
 		return -1;
+	}
+
+	public Palabra obtenerPalabraPorNivel(int nivel) {
+		boolean encontrado = false;
+		for (int i = 0; i < palabras.size() && !encontrado; i++) {
+			Palabra pal = getPalabraEnPosicion(i);
+			if (pal.getDificultad() == nivel && !pal.getUso()) {
+				pal.setUso(true);
+				return pal;
+			}
+		}
+		return null;
 	}
 }

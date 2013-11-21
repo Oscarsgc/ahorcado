@@ -22,7 +22,7 @@ public class TestDiccionario {
 	 diccionario.llenarDiccionario();
 	
 	 assertEquals("ToyStory",
-	 diccionario.palabraAleatoriaPorCategoria("Peliculas", 1).getPalabra());
+	 diccionario.obtenerPalabra("Peliculas", 1).getPalabra());
 	 }
 
 }

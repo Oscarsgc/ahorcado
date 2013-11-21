@@ -1,53 +1,37 @@
 import java.util.ArrayList;
 
 public class Diccionario {
-	public ArrayList<ListaDePalabras> getDiccionario() {
-		return diccionario;
-	}
-
-	public void setDiccionario(ArrayList<ListaDePalabras> diccionario) {
-		this.diccionario = diccionario;
-	}
-
-	private int listQty;
 	private ArrayList<ListaDePalabras> diccionario;
 
 	public Diccionario() {
 		this.diccionario = new ArrayList<ListaDePalabras>();
-		this.listQty = 0;
 		llenarDiccionario();
+	}
+
+	public ArrayList<ListaDePalabras> getDiccionario() {
+		return diccionario;
 	}
 
 	public void addList(ListaDePalabras listaPalabras) {
 		diccionario.add(listaPalabras);
-		listQty++;
 	}
 
-	public Palabra palabraAleatoriaPorCategoria(String categoria, int nivel) {
+	public Palabra obtenerPalabra(String categoria, int nivel) {
 		for (int i = 0; i < diccionario.size(); i++) {
 			if (diccionario.get(i).getCategoria().equals(categoria)) {
-
-				boolean encontrado = false;
-				int pos = 0;
-				while (!encontrado) {
-					Palabra pal = diccionario.get(i).getPalabraEnPosicion(pos);
-					if (pal.getDificultad() == nivel && !pal.getUso()) {
-						pal.setUso(true);
-						return pal;
-					}
-					pos++;
-				}
+				return diccionario.get(i).obtenerPalabraPorNivel(nivel);
 			}
 		}
 		return null;
 	}
 
-	public int getListQty() {
-		return listQty;
-	}
-
-	public void setListQty(int listQty) {
-		this.listQty = listQty;
+	public void agregarPalabra(String pal, int nivel, String categoria) {
+		for (int i = 0; i < this.diccionario.size(); i++) {
+			if (this.diccionario.get(i).getCategoria().equals(categoria)) {
+				this.diccionario.get(i).agregarPalabra(
+						new Palabra(pal, nivel, false));
+			}
+		}
 	}
 
 	public void llenarDiccionario() {
@@ -105,13 +89,5 @@ public class Diccionario {
 		addList(paises);
 		addList(peliculas);
 		addList(seriesTV);
-	}
-
-	public void agregarPalabra(String pal, int nivel, String categoria) {
-		for (int i = 0; i < this.diccionario.size(); i++) {
-			if (this.diccionario.get(i).getCategoria().equals(categoria)) {
-				this.diccionario.get(i).agregarPalabra(new Palabra(pal, nivel, false));
-			}
-		}
 	}
 }
