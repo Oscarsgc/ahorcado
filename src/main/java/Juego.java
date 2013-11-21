@@ -5,18 +5,18 @@ public class Juego {
 	private Diccionario diccionario = new Diccionario();
 
 	public Juego() {
-		this.diccionario.llenarDiccionario();
+		// this.diccionario.llenarDiccionario();
 		this.palabra = new Palabra();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 
 	}
 
-	public Juego(int nivel, String categoria) {
-		this.diccionario.llenarDiccionario();
-		this.palabra = obtenerPalabraDeDiccionario(nivel, categoria);
-		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-
-	}
+	// public Juego(int nivel, String categoria) {
+	// this.diccionario.llenarDiccionario();
+	// this.palabra = obtenerPalabraDeDiccionario(nivel, categoria);
+	// this.palabraMostrada = this.palabra.dibujarPalabraVacia();
+	//
+	// }
 
 	public Palabra getPalabra() {
 		return palabra;
@@ -42,7 +42,7 @@ public class Juego {
 	public Juego(String palabra) {
 		this.palabra = new Palabra(palabra);
 		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-		this.diccionario.llenarDiccionario();
+		// this.diccionario.llenarDiccionario();
 	}
 
 	public Juego(Palabra palabra) {
@@ -62,7 +62,7 @@ public class Juego {
 			if (gano())
 				return "GANO!!";
 			else
-				return palabraMostrada;
+				return "";
 		} else {
 			return mostrarMensajeError();
 		}
