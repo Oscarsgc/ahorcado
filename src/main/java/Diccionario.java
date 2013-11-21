@@ -15,7 +15,7 @@ public class Diccionario {
 	public Diccionario() {
 		this.diccionario = new ArrayList<ListaDePalabras>();
 		this.listQty = 0;
-		//llenarDiccionario();
+		llenarDiccionario();
 	}
 
 	public void addList(ListaDePalabras listaPalabras) {
@@ -24,19 +24,15 @@ public class Diccionario {
 	}
 
 	public Palabra palabraAleatoriaPorCategoria(String categoria, int nivel) {
-		// int random;
 		for (int i = 0; i < diccionario.size(); i++) {
-			if (diccionario.get(i).getCategoria() == categoria) {
+			if (diccionario.get(i).getCategoria().equals(categoria)) {
+
 				boolean encontrado = false;
 				int pos = 0;
 				while (!encontrado) {
-					/*
-					 * random = 0 + (int) (Math.random() * ((15 - 0) + 1));
-					 * Palabra pal = diccionario.get(i).getPalabraEnPosicion(
-					 * random);
-					 */
 					Palabra pal = diccionario.get(i).getPalabraEnPosicion(pos);
 					if (pal.getDificultad() == nivel && !pal.getUso()) {
+
 						pal.setUso(true);
 						return pal;
 					}

@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 //import javax.swing.Spring;
 
 public class AhorcadoServlet extends HttpServlet {
@@ -20,28 +21,37 @@ public class AhorcadoServlet extends HttpServlet {
 
 		String categoria = request.getParameter("categoria");
 		int nivel = Integer.parseInt(request.getParameter("nivel"));
-		if (category.compareTo(categoria) != 0 || level != nivel){
-			ahorcado.setPalabra(dic.palabraAleatoriaPorCategoria(categoria, nivel));
-			level=nivel;
-			category=categoria;
+		response.getWriter().println("CATEGORIA: "+categoria);
+		response.getWriter().println("NIVEL: "+nivel);
+		
+		if (category.compareTo(categoria) != 0 || level != nivel) {
+		
+			ahorcado.setPalabra(dic.palabraAleatoriaPorCategoria(categoria,
+					nivel));
+		
+			level = nivel;
+			category = categoria;
 			dibujada = ahorcado.dibujarPalabra();
-		}
-		else{
+		} else {
+		
 			ahorcado.setPalabraMostrada(dibujada);
 		}
-		char letra = request.getParameter("letra").charAt(0);
 		
+		char letra = request.getParameter("letra").charAt(0);
+
 		String res = ahorcado.ingresarLetra(letra);
 		
+
 		String salida = ahorcado.dibujarPalabra();
 		
-		if (res==salida)
+
+		if (res == salida)
 			response.getWriter().println(ahorcado.dibujarPalabra());
-		else
-		{
+		else {
 			response.getWriter().println(ahorcado.dibujarPalabra());
 			response.getWriter().println(res);
 		}
+		
 	}
 
 }

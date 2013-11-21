@@ -22,6 +22,6 @@ public class AdminServlet extends HttpServlet {
 		out.println("Este es el diccionario: " + '\n'
 				+ ahorcado.mostrarPalabrasDiccionario() + "<br/>");
 
-		out.println("<a href=\"administrador.html\" > Volver </a>");
+		//	out.println("<a href=\"administrador.html\" > Volver </a>");
 	}
 }

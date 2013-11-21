@@ -101,7 +101,7 @@ public class Juego {
 	public String getPalabraMostrada() {
 		return palabraMostrada;
 	}
-	
+
 	public boolean gano() {
 		return !palabraMostrada.contains("_");
 	}
