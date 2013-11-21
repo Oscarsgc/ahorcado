@@ -4,7 +4,7 @@
 </head>
 <body>
 	<marquee>
-		<h1>Nivel Basico</h1>
+		<h1> Ingresar Letra - Nivel Basico</h1>
 	</marquee>
 	<Center>
 		<h1>Bienvenido al nivel Basico!</h1>
@@ -13,14 +13,17 @@
 		palabras sin mucha complejidad!<br>
 		<br>
 		<br>
-		<Form action="ingresar_letra.html" name="jugar">
+		<Form action="AhorcadoServlet" name="jugarBasico">
 			Selecciona una categoria de palabras: <SELECT NAME="categoria" SIZE=1>
 				<OPTION VALUE="Paises">Paises</OPTION>
 				<OPTION VALUE="Peliculas">Peliculas</OPTION>
-				<OPTION VALUE="TV">Programas de TV.</OPTION>
-			</SELECT><br> <br> <input type=hidden name=nivel value=1> <input
-				type=submit id=intentalo value="Intentalo">
-
+				<OPTION VALUE="TV">Programas de TV</OPTION>
+			</SELECT>
+			<br>
+			Ingrese letra:  <input type=text name=letra>
+			<br>
+			<br> <input type=hidden name=nivel value=1>
+			<input type=submit id=intentalo value="Intentalo">
 		</Form>
 		<Form action="seleccionarNivel.html" name="volver">
 			<input type=submit id=volver value="Volver">

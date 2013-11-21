@@ -15,6 +15,7 @@ public class Diccionario {
 	public Diccionario() {
 		this.diccionario = new ArrayList<ListaDePalabras>();
 		this.listQty = 0;
+		//llenarDiccionario();
 	}
 
 	public void addList(ListaDePalabras listaPalabras) {

@@ -11,12 +11,15 @@
 		Este nivel esta diseniado para quellos jugadores que juegan al<br>
 		ahorcado y tienen ganas de un verdadero reto al jugar, <br> con
 		palabras bastante complejas!<br> <br> <br>
-		<Form action="jugar.html" name="jugarDificil">
+		<Form action="AhorcadoServlet" name="jugarBasico">
 			Selecciona una categoria de palabras: <SELECT NAME="categoria" SIZE=1>
 				<OPTION VALUE="Paises">Paises</OPTION>
 				<OPTION VALUE="Peliculas">Peliculas</OPTION>
-				<OPTION VALUE="TV">Programas de TV.</OPTION>
+				<OPTION VALUE="TV">Programas de TV</OPTION>
 			</SELECT>
+			<br>
+			Ingrese letra:  <input type=text name=letra>
+			<br>
 			<input type=hidden name=nivel value=3><br>
 			<br> <input type=submit id=intentalo value="Intentalo">
 		</Form>

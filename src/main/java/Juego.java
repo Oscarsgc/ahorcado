@@ -59,9 +59,11 @@ public class Juego {
 		int encontrado = palabra.buscarLetra(letra);
 		if (encontrado != -1) {
 			dibujarLetraEnPalabra(letra, encontrado);
-			return dibujarPalabra();
+			if (gano())
+				return "GANO!!";
+			else
+				return palabraMostrada;
 		} else {
-			dibujarPalabra();
 			return mostrarMensajeError();
 		}
 	}
@@ -98,6 +100,10 @@ public class Juego {
 
 	public String getPalabraMostrada() {
 		return palabraMostrada;
+	}
+	
+	public boolean gano() {
+		return !palabraMostrada.contains("_");
 	}
 
 	public String mostrarPalabrasDiccionario() {

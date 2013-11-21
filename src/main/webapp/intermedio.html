@@ -11,12 +11,16 @@
 		Este nivel esta diseniado para quellos jugadores que ya jugaron<br>
 		el ahorcado alguna vez y quieren retar sus habilidades <br> con
 		palabras un poco mas complejas!<br> <br> <br>
-		<Form action="jugar.html" name="jugarIntermedio">
+		<Form action="AhorcadoServlet" name="jugarIntermedio">
 			Selecciona una categoria de palabras: <SELECT NAME="categoria" SIZE=1>
 				<OPTION VALUE="Paises">Paises</OPTION>
 				<OPTION VALUE="Peliculas">Peliculas</OPTION>
-				<OPTION VALUE="TV">Programas de TV.</OPTION>
-			</SELECT><br> <br> <input type=submit id=intentalo value="Intentalo">
+				<OPTION VALUE="TV">Programas de TV</OPTION>
+			</SELECT>
+			<br>
+			Ingrese letra:  <input type=text name=letra>
+			<br>
+			<br> <input type=submit id=intentalo value="Intentalo">
 		<input type=hidden name=nivel value=2>
 		</Form>
 		<Form action="seleccionarNivel.html" name="volver">

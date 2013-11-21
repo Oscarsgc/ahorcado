@@ -37,7 +37,7 @@ public class TestListaDePalabras {
 		listaPalabras.agregarPalabra(new Palabra("X"));
 		listaPalabras.agregarPalabra(new Palabra("Y"));
 		listaPalabras.agregarPalabra(new Palabra("Z"));
-		assertEquals("X" + "Y" + "Z", listaPalabras.mostrarLista());
+		assertEquals("X\nY\nZ\n", listaPalabras.mostrarLista());
 	}
 
 	@Test
