@@ -43,7 +43,7 @@ public class AhorcadoServlet extends HttpServlet {
 		
 
 		String salida = ahorcado.dibujarPalabra();
-		
+		dibujada=salida;
 
 		if (res == salida)
 			response.getWriter().println(ahorcado.dibujarPalabra());
