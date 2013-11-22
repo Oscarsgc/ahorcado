@@ -24,15 +24,6 @@ public class TestListaDePalabras {
 	}
 
 	@Test
-	public void eliminarPalabraXDeLista() {
-		listaPalabras.agregarPalabra(new Palabra("X"));
-		listaPalabras.agregarPalabra(new Palabra("Y"));
-		listaPalabras.agregarPalabra(new Palabra("Z"));
-		listaPalabras.eliminarPalabra(new Palabra("Z"));
-		assertEquals(2, listaPalabras.getCantidadPalabras());
-	}
-
-	@Test
 	public void mostrarPalabrasDeLista() {
 		listaPalabras.agregarPalabra(new Palabra("X"));
 		listaPalabras.agregarPalabra(new Palabra("Y"));
