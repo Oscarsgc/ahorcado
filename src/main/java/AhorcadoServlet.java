@@ -13,80 +13,104 @@ public class AhorcadoServlet extends HttpServlet {
 	int level = 0;
 	String dibujada = "";
 	int cantPistas;
+	String res;
+	HttpServletResponse response;
+	HttpServletRequest request;
 
 	@Override
-	protected void service(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		// se inicializan variables y se obtienen datos de vista anterior
+		request = req;
+		response = resp;
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
 		String categoria = request.getParameter("categoria");
-
 		int nivel = Integer.parseInt(request.getParameter("nivel"));
-		response.getWriter().println("CATEGORIA: " + categoria);
-		out.println("</br>");
-		response.getWriter().println("NIVEL: " + nivel);
-		out.println("</br>");
-		
-
+		String entrada = request.getParameter("letra");
+		String pista = request.getParameter("pista");
+		// se muestran los datos del juego
+		response.getWriter().println("CATEGORIA: " + categoria + "<br>");
+		response.getWriter().println("NIVEL: " + nivel + "<br>");
+		// verifica si se cambio el nivel o la categoria para reiniciar juego
 		if (!category.equals(categoria) || level != nivel) {
-			ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
-			cantPistas = ahorcado.getPalabra()
-					.calcularCantidadPistasPorPalabra();
-			level = nivel;
-			category = categoria;
-			dibujada = ahorcado.dibujarPalabra();
+			inicializarJuego(categoria, nivel);
 		} else {
-
 			ahorcado.setPalabraMostrada(dibujada);
 		}
-		response.getWriter().println("PISTAS DISPONIBLES: " + cantPistas);
-		out.println("</br>");
-		String car = request.getParameter("letra");
-		String res;
-		String pista = request.getParameter("pista");
-		if (car != null && !car.isEmpty()) {
-			char letra = car.charAt(0);
-			res = ahorcado.ingresarLetra(letra);
-			dibujada = ahorcado.dibujarPalabra();
-			response.getWriter().println(res);
-			out.println("</br>");
-			if (res.equals("GANO!!")) {
-				ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
-				dibujada = ahorcado.dibujarPalabra();
-				cantPistas = ahorcado.getPalabra()
-						.calcularCantidadPistasPorPalabra();
-			}
+		// se verifica y ejecuta el comando solicitado por usuario
+		manejarIngresoDeLetra(categoria, nivel, entrada);
+		manejarPista(categoria, nivel, pista);
+		// se dibuja la palabra del juego
+		response.getWriter().println("<br>" + ahorcado.dibujarPalabra());
+		// se dibuja el resto de la interfaz (botones, textboxes, etc)
+		dibujarInterfaz(categoria, nivel);
+	}
+
+	private void manejarPista(String categoria, int nivel, String pista)
+			throws ServletException, IOException {
+		if (pista.equals("pista") && cantPistas > 0) {
+			darPista(categoria, nivel);
 		} else {
-			if (pista.equals("pista") && cantPistas > 0) {
-				char letra = ahorcado.getPalabra().obtenerUnaPista();
-				cantPistas--;
-				out.println("</br>");
-				out.println("</br>");
-				out.println("Pista: " + letra);
-				out.println("</br>");
-				res = ahorcado.ingresarLetra(letra);
-				dibujada = ahorcado.dibujarPalabra();
-				response.getWriter().println(res);
-				out.println("</br>");
-				if (res.equals("GANO!!")) {
-					ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
-					out.println("</br>");
-					dibujada = ahorcado.dibujarPalabra();
-					cantPistas = ahorcado.getPalabra()
-							.calcularCantidadPistasPorPalabra();
-				}
-			} else {
-				if (cantPistas == 0) {
-					out.println("</br>");
-					out.println("</br>");
-					out.println("Su cantidad de pistas se agoto =( ");
-					out.println("</br>");
-				}
+			response.getWriter().println(
+					"PISTAS DISPONIBLES: " + (cantPistas) + "<br>");
+			if (cantPistas == 0) {
+				response.getWriter().println(
+						"Su cantidad de pistas se agoto :(");
 			}
 		}
+	}
 
-		response.getWriter().println(ahorcado.dibujarPalabra());
+	private void darPista(String categoria, int nivel) throws ServletException,
+			IOException {
+		char letra = ahorcado.getPalabra().obtenerUnaPista();
+		cantPistas--;
+		response.getWriter().println(
+				"PISTAS DISPONIBLES: " + (cantPistas) + "<br>");
+		response.getWriter().println("Pista: " + letra);
+		ingresarLetra(categoria, nivel, letra);
+	}
 
+	private void manejarIngresoDeLetra(String categoria, int nivel,
+			String entrada) throws ServletException, IOException {
+		if (entrada != null && !entrada.isEmpty()) {
+			char letra = entrada.charAt(0);
+			ingresarLetra(categoria, nivel, letra);
+		}
+	}
+
+	private void ingresarLetra(String categoria, int nivel, char letra)
+			throws ServletException, IOException {
+		res = ahorcado.ingresarLetra(letra);
+		dibujada = ahorcado.dibujarPalabra();
+		response.getWriter().println(res);
+		if (res.equals("GANO!!")) {
+			response.getWriter().println("<br>Palabra adivinada: " + dibujada);
+			reiniciarJuego(categoria, nivel);
+		}
+		if (!res.isEmpty()){
+			response.getWriter().println("<br>");
+		}
+	}
+
+	private void reiniciarJuego(String categoria, int nivel)
+			throws ServletException, IOException {
+		ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
+		dibujada = ahorcado.dibujarPalabra();
+		cantPistas = ahorcado.getPalabra().calcularCantidadPistasPorPalabra();
+	}
+
+	private void inicializarJuego(String categoria, int nivel)
+			throws ServletException, IOException {
+		ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
+		cantPistas = ahorcado.getPalabra().calcularCantidadPistasPorPalabra();
+		level = nivel;
+		category = categoria;
+		dibujada = ahorcado.dibujarPalabra();
+	}
+
+	private void dibujarInterfaz(String categoria, int nivel)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
 		out.println("</br>");
 		out.println("<HTML>");
 		out.println("<BODY>");
@@ -114,6 +138,5 @@ public class AhorcadoServlet extends HttpServlet {
 		out.println("</FORM>");
 		out.println("</BODY>");
 		out.println("</HTML>");
-
 	}
 }

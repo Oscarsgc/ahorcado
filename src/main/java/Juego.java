@@ -1,30 +1,13 @@
 public class Juego {
 
-	private Palabra palabra = new Palabra();
-	private String palabraMostrada = new String();
-	private Diccionario diccionario = new Diccionario();
-	private Pista pistas;
+	private Palabra palabra;
+	private String palabraMostrada;
+	private Diccionario diccionario;
 
 	public Juego() {
-		// this.diccionario.llenarDiccionario();
 		this.palabra = new Palabra();
+		this.diccionario = new Diccionario();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
-		this.pistas = new Pista();
-	}
-
-	// public Juego(int nivel, String categoria) {
-	// this.diccionario.llenarDiccionario();
-	// this.palabra = obtenerPalabraDeDiccionario(nivel, categoria);
-	// this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-	//
-	// }
-
-	public Pista getPistas() {
-		return pistas;
-	}
-
-	public void setPistas(Pista pistas) {
-		this.pistas = pistas;
 	}
 
 	public Palabra getPalabra() {
@@ -51,13 +34,13 @@ public class Juego {
 	public Juego(String palabra) {
 		this.palabra = new Palabra(palabra);
 		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-		// this.diccionario.llenarDiccionario();
+		this.diccionario = new Diccionario();
 	}
 
 	public Juego(Palabra palabra) {
 		this.palabra = palabra;
 		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-		this.diccionario.llenarDiccionario();
+		this.diccionario = new Diccionario();
 	}
 
 	public String dibujarPalabra() {
