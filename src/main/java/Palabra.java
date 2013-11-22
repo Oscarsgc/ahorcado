@@ -4,24 +4,42 @@ public class Palabra implements java.io.Serializable {
 	private int dificultad;
 	private boolean uso;
 	private int cantPistas;
+	private String frase;
 
 	public Palabra() {
 		this.palabra = "";
 		this.dificultad = -1;
 		this.uso = false;
+		this.frase = ""; 
 	}
 
 	public Palabra(String palabra) {
 		this.palabra = palabra;
 		this.dificultad = -1;
 		this.uso = false;
+		this.frase = ""; 
 	}
 
 	public Palabra(String palabra, int dificultad, boolean uso) {
 		this.palabra = palabra;
 		this.dificultad = dificultad;
 		this.uso = uso;
+		this.frase = "";
+	}
+	
+	public Palabra(String palabra, int dificultad, boolean uso, String frase) {
+		this.palabra = palabra;
+		this.dificultad = dificultad;
+		this.uso = uso;
+		this.frase = frase;
+	}
+	
+	public String getFrase() {
+		return frase;
+	}
 
+	public void setFrase(String frase) {
+		this.frase = frase;
 	}
 
 	public int getDificultad() {
@@ -68,12 +86,7 @@ public class Palabra implements java.io.Serializable {
 	}
 	
 	public int calcularCantidadPistasPorPalabra() {
-		int tamanioPal = palabra.length();
-		if (tamanioPal % 2 == 0) {
-			this.cantPistas = (tamanioPal / 2) - 1;
-		} else {
-			this.cantPistas = tamanioPal / 2;
-		}
+		this.cantPistas = palabra.length() / 3;
 		return this.cantPistas;
 	}
 	
