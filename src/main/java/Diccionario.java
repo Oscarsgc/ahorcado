@@ -39,7 +39,7 @@ public class Diccionario {
 		paises.agregarPalabra(new Palabra("Afganistan", 2, false,
 				"Pais conocido por el terrorismo"));
 		paises.agregarPalabra(new Palabra("Bahamas", 1, false,
-				"Pais conocido por sus hermosas playas"));
+				"Pais conocido por su hermosa Rihanna"));
 		paises.agregarPalabra(new Palabra("Bolivia", 1, false,
 				"Pais conocido por tener un presidente plurinacional"));
 		paises.agregarPalabra(new Palabra("Croacia", 2, false,
@@ -82,11 +82,11 @@ public class Diccionario {
 		peliculas.agregarPalabra(new Palabra("LosJuegosDelHambre", 3, false));
 		peliculas.agregarPalabra(new Palabra("DiaroDeUnaPasion", 3, false));
 
-		ListaDePalabras seriesTV = new ListaDePalabras("SeriesTV");
+		ListaDePalabras seriesTV = new ListaDePalabras("TV");
 		seriesTV.agregarPalabra(new Palabra("Friends", 1, false,
 				"Son ses integrantes en el elenco principal"));
 		seriesTV.agregarPalabra(new Palabra("Mom", 1, false,
-				"Protagonizada por la actriz de: What is yout number?"));
+				"Protagonizada por la actriz de: What is your number?"));
 		seriesTV.agregarPalabra(new Palabra("Arrow", 1, false));
 		seriesTV.agregarPalabra(new Palabra("Glee", 1, false));
 		seriesTV.agregarPalabra(new Palabra("Hostages", 1, false));
