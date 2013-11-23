@@ -21,6 +21,7 @@ public class AhorcadoServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+
 		// se inicializan variables y se obtienen parametros
 		request = req;
 		response = resp;
@@ -30,69 +31,76 @@ public class AhorcadoServlet extends HttpServlet {
 		String entrada = request.getParameter("letra");
 		String pista = request.getParameter("pista");
 		String frase = request.getParameter("frase");
+
 		// verifica si se cambio el nivel o la categoria para reiniciar juego
-		if(category != null && level != null) {
+		if (category != null && level != null) {
 			inicializarJuego(category, level);
 		} else {
 			ahorcado.setPalabraMostrada(dibujada);
 		}
+
 		// se muestran los datos del juego
 		response.getWriter().println("CATEGORIA: " + categoria + "<br>");
 		response.getWriter().println("NIVEL: " + nivel + "<br>");
+
 		// se verifica y ejecuta el comando solicitado por usuario
 		manejarIngresoDeLetra(entrada);
 		manejarFrasePista(frase);
 		manejarPista(pista);
+
 		// se dibuja la palabra del juego
 		response.getWriter().println("<br>" + ahorcado.dibujarPalabra());
+
 		// se dibuja el resto de la interfaz (botones, textboxes, etc)
 		dibujarInterfaz();
+
+		// se dibuja al munieco
+		response.getWriter().println(dibujarMunieco());
 	}
-	
-	private void manejarFrasePista(String frase)
-			throws ServletException, IOException {
-		if(frase != null){
-			//if (frase.equals("PedirFrase")) {
-				if (!fraseDada){
-					imprimirFrase();
-				} else {
-					response.getWriter().println("La frase ya se le fue mostrada <br>");
-				}
-			//}
+
+	private void manejarFrasePista(String frase) throws ServletException,
+			IOException {
+		if (frase != null) {
+			// if (frase.equals("PedirFrase")) {
+			if (!fraseDada) {
+				imprimirFrase();
+			} else {
+				response.getWriter().println(
+						"La frase ya se le fue mostrada <br>");
+			}
+			// }
 		}
 	}
-	
+
 	private void imprimirFrase() throws ServletException, IOException {
-		response.getWriter().println("FRASE: " + ahorcado.getPalabra().getFrase() + "<br>");
+		response.getWriter().println(
+				"FRASE: " + ahorcado.getPalabra().getFrase() + "<br>");
 		fraseDada = true;
 	}
 
-	private void manejarPista(String pista)
-			throws ServletException, IOException {
-		if(pista != null){
+	private void manejarPista(String pista) throws ServletException,
+			IOException {
+		if (pista != null) {
 			if (cantPistas > 0) {
 				darPista();
 			} else {
 				mostrarInformacionDePistas();
 			}
-		}
-		else {
+		} else {
 			mostrarInformacionDePistas();
 		}
 	}
-	
-	private void mostrarInformacionDePistas() throws ServletException, IOException {
+
+	private void mostrarInformacionDePistas() throws ServletException,
+			IOException {
 		if (cantPistas == 0) {
-			response.getWriter().println(
-					"Su cantidad de pistas se agoto :(");
+			response.getWriter().println("Su cantidad de pistas se agoto :(");
 		} else {
-			response.getWriter().println(
-					"PISTAS DISPONIBLES: " + cantPistas);
+			response.getWriter().println("PISTAS DISPONIBLES: " + cantPistas);
 		}
 	}
 
-	private void darPista() throws ServletException,
-			IOException {
+	private void darPista() throws ServletException, IOException {
 		char letra = ahorcado.getPalabra().obtenerUnaPista();
 		cantPistas--;
 		response.getWriter().println(
@@ -101,33 +109,42 @@ public class AhorcadoServlet extends HttpServlet {
 		ingresarLetra(letra);
 	}
 
-	private void manejarIngresoDeLetra(String entrada) throws ServletException, IOException {
+	private void manejarIngresoDeLetra(String entrada) throws ServletException,
+			IOException {
 		if (entrada != null) {
 			char letra = entrada.charAt(0);
 			ingresarLetra(letra);
 		}
 	}
 
-	private void ingresarLetra(char letra)
-			throws ServletException, IOException {
+	private void ingresarLetra(char letra) throws ServletException, IOException {
 		res = ahorcado.ingresarLetra(letra);
 		dibujada = ahorcado.dibujarPalabra();
 		response.getWriter().println(res);
+		if (ahorcado.getCantidadErrores() == 6) {
+			response.getWriter().println(
+					"<br>GAME OVER!, la palabra era: "
+							+ ahorcado.getPalabra().getPalabra());
+			response.getWriter().println("<br>" + dibujarMunieco());
+			reiniciarJuego();
+
+		}
 		if (res.equals("GANO!!")) {
 			response.getWriter().println("<br>Palabra adivinada: " + dibujada);
 			reiniciarJuego();
 		}
-		if (!res.isEmpty()){
+		if (!res.isEmpty()) {
 			response.getWriter().println("<br>");
 		}
+
 	}
 
-	private void reiniciarJuego()
-			throws ServletException, IOException {
+	private void reiniciarJuego() throws ServletException, IOException {
 		ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
 		dibujada = ahorcado.dibujarPalabra();
 		cantPistas = ahorcado.getPalabra().calcularCantidadPistasPorPalabra();
 		fraseDada = false;
+		ahorcado.setCantidadErrores(0);
 	}
 
 	private void inicializarJuego(String category, String level)
@@ -140,15 +157,18 @@ public class AhorcadoServlet extends HttpServlet {
 		fraseDada = false;
 	}
 
-	private void dibujarInterfaz()
-			throws ServletException, IOException {
+	private String dibujarMunieco() {
+		return ahorcado.dibujarMunieco();
+	}
+
+	private void dibujarInterfaz() throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.println("</br>");
 		out.println("<FORM action=AhorcadoServlet>");
 		out.println("Ingrese letra:  <input type=text name=letra>");
 		out.println("<input type=submit name=ingresaLetra value=IngresarLetra>");
 		out.println("</FORM>");
-		
+
 		out.println("<FORM action=AhorcadoServlet>");
 		out.println("<input type=submit name=pista value=PedirPista>");
 		out.println("</FORM>");
@@ -156,7 +176,7 @@ public class AhorcadoServlet extends HttpServlet {
 		out.println("<FORM action=AhorcadoServlet>");
 		out.println("<input type=submit name=frase value=PedirFrase>");
 		out.println("</FORM>");
-		
+
 		out.println("<FORM action=seleccionarNivel.html>");
 		out.println("<input type=submit name=volver value=Cancelar>");
 		out.println("</FORM>");

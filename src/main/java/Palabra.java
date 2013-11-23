@@ -10,14 +10,14 @@ public class Palabra implements java.io.Serializable {
 		this.palabra = "";
 		this.dificultad = -1;
 		this.uso = false;
-		this.frase = ""; 
+		this.frase = "";
 	}
 
 	public Palabra(String palabra) {
 		this.palabra = palabra;
 		this.dificultad = -1;
 		this.uso = false;
-		this.frase = ""; 
+		this.frase = "";
 	}
 
 	public Palabra(String palabra, int dificultad, boolean uso) {
@@ -26,14 +26,14 @@ public class Palabra implements java.io.Serializable {
 		this.uso = uso;
 		this.frase = "";
 	}
-	
+
 	public Palabra(String palabra, int dificultad, boolean uso, String frase) {
 		this.palabra = palabra;
 		this.dificultad = dificultad;
 		this.uso = uso;
 		this.frase = frase;
 	}
-	
+
 	public String getFrase() {
 		return frase;
 	}
@@ -84,12 +84,12 @@ public class Palabra implements java.io.Serializable {
 		}
 		return res;
 	}
-	
+
 	public int calcularCantidadPistasPorPalabra() {
 		this.cantPistas = palabra.length() / 3;
 		return this.cantPistas;
 	}
-	
+
 	public char obtenerUnaPista() {
 		char[] arreglo = palabra.toCharArray();
 		int random = 0 + (int) (Math.random() * ((palabra.length() - 1) + 1));

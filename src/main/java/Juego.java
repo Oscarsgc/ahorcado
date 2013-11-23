@@ -2,12 +2,23 @@ public class Juego {
 
 	private Palabra palabra;
 	private String palabraMostrada;
+	private int cantidadErrores;
+
+	public int getCantidadErrores() {
+		return cantidadErrores;
+	}
+
+	public void setCantidadErrores(int cantidadErrores) {
+		this.cantidadErrores = cantidadErrores;
+	}
+
 	private Diccionario diccionario;
 
 	public Juego() {
 		this.palabra = new Palabra();
 		this.diccionario = new Diccionario();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
+		this.cantidadErrores = 0;
 	}
 
 	public Palabra getPalabra() {
@@ -56,6 +67,7 @@ public class Juego {
 			else
 				return "";
 		} else {
+			this.cantidadErrores++;
 			return mostrarMensajeError();
 		}
 	}
@@ -75,6 +87,35 @@ public class Juego {
 
 	public String mostrarMensajeError() {
 		return "Letra no encontrada!";
+	}
+
+	public String dibujarMunieco() {
+		String retornar = "";
+		switch (this.cantidadErrores) {
+		case 0:
+			retornar = " ";
+			break;
+		case 1:
+			retornar = " " + "O" + "<br>";
+			break;
+		case 2:
+			retornar = " " + "O" + "<br>" + "/";
+			break;
+		case 3:
+			retornar = " " + "O" + "<br>" + "/" + "|";
+			break;
+		case 4:
+			retornar = " " + "O" + "<br>" + "/" + "|" + "\\";
+			break;
+		case 5:
+			retornar = " " + "O" + "<br>" + "/" + "|" + "\\" + "<br>" + "/";
+			break;
+		case 6:
+			retornar = " " + "O" + "<br>" + "/" + "|" + "\\" + "<br>" + "/"
+					+ " " + "\\";
+			break;
+		}
+		return retornar;
 	}
 
 	public void agregarPalabraAlDiccionario(String pal, int nivel,
