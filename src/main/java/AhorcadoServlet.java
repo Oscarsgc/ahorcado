@@ -15,6 +15,7 @@ public class AhorcadoServlet extends HttpServlet {
 	int cantPistas;
 	boolean fraseDada;
 	String res;
+	String letrasUsadas = "";
 	HttpServletResponse response;
 	HttpServletRequest request;
 
@@ -56,6 +57,10 @@ public class AhorcadoServlet extends HttpServlet {
 
 		// se dibuja al munieco
 		response.getWriter().println(dibujarMunieco());
+
+		// se muestran letras ya usadas
+		response.getWriter().println(
+				"<br>" + "Letras ya usadas: " + letrasUsadas);
 	}
 
 	private void manejarFrasePista(String frase) throws ServletException,
@@ -113,6 +118,7 @@ public class AhorcadoServlet extends HttpServlet {
 			IOException {
 		if (entrada != null) {
 			char letra = entrada.charAt(0);
+			letrasUsadas = letrasUsadas + letra + " ";
 			ingresarLetra(letra);
 		}
 	}
@@ -127,7 +133,6 @@ public class AhorcadoServlet extends HttpServlet {
 							+ ahorcado.getPalabra().getPalabra());
 			response.getWriter().println("<br>" + dibujarMunieco());
 			reiniciarJuego();
-
 		}
 		if (res.equals("GANO!!")) {
 			response.getWriter().println("<br>Palabra adivinada: " + dibujada);
@@ -143,6 +148,7 @@ public class AhorcadoServlet extends HttpServlet {
 		ahorcado.obtenerPalabraDeDiccionario(nivel, categoria);
 		dibujada = ahorcado.dibujarPalabra();
 		cantPistas = ahorcado.getPalabra().calcularCantidadPistasPorPalabra();
+		letrasUsadas = "";
 		fraseDada = false;
 		ahorcado.setCantidadErrores(0);
 	}
