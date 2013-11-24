@@ -3,6 +3,15 @@ public class Juego {
 	private Palabra palabra;
 	private String palabraMostrada;
 	private int cantidadErrores;
+	private Puntuacion puntuacion;
+
+	public Puntuacion getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(Puntuacion puntuacion) {
+		this.puntuacion = puntuacion;
+	}
 
 	public int getCantidadErrores() {
 		return cantidadErrores;
@@ -19,6 +28,7 @@ public class Juego {
 		this.diccionario = new Diccionario();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 		this.cantidadErrores = 0;
+		this.puntuacion = new Puntuacion();
 	}
 
 	public Palabra getPalabra() {
@@ -62,10 +72,13 @@ public class Juego {
 		int encontrado = palabra.buscarLetra(letra);
 		if (encontrado != -1) {
 			dibujarLetraEnPalabra(letra, encontrado);
-			if (gano())
+			if (gano()) {
+				this.puntuacion.aumentarPuntuacion();
 				return "GANO!!";
-			else
+
+			} else {
 				return "";
+			}
 		} else {
 			this.cantidadErrores++;
 			return mostrarMensajeError();

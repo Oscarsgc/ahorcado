@@ -61,6 +61,11 @@ public class AhorcadoServlet extends HttpServlet {
 		// se muestran letras ya usadas
 		response.getWriter().println(
 				"<br>" + "Letras ya usadas: " + letrasUsadas);
+
+		// se muestra el puntaje de la partida actual
+		// response.getWriter().println(
+		// "<br>" + "Puntuacion actual: "
+		// + ahorcado.getPuntuacion().getPuntuacion());
 	}
 
 	private void manejarFrasePista(String frase) throws ServletException,
@@ -130,12 +135,19 @@ public class AhorcadoServlet extends HttpServlet {
 		if (ahorcado.getCantidadErrores() == 6) {
 			response.getWriter().println(
 					"<br>GAME OVER!, la palabra era: "
-							+ ahorcado.getPalabra().getPalabra());
+							+ ahorcado.getPalabra().getPalabra() + "<br>"
+							+ "Su puntaje es: "
+							+ ahorcado.getPuntuacion().getPuntuacion());
 			response.getWriter().println("<br>" + dibujarMunieco());
 			reiniciarJuego();
 		}
 		if (res.equals("GANO!!")) {
-			response.getWriter().println("<br>Palabra adivinada: " + dibujada);
+			response.getWriter()
+					.println(
+							"<br>Palabra adivinada: " + dibujada + "<br>"
+									+ "Su puntaje es: "
+									+ ahorcado.getPuntuacion().getPuntuacion()
+									+ "<br>");
 			reiniciarJuego();
 		}
 		if (!res.isEmpty()) {
