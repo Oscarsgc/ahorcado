@@ -86,14 +86,9 @@ public class Palabra implements java.io.Serializable {
 	}
 
 	public int calcularCantidadPistasPorPalabra() {
-		this.cantPistas = palabra.length() / 3;
-		return this.cantPistas;
+		cantPistas = palabra.length() / 3;
+		if (palabra.length() % 3 == 0)
+			cantPistas--;
+		return cantPistas;
 	}
-
-	public char obtenerUnaPista() {
-		char[] arreglo = palabra.toCharArray();
-		int random = 0 + (int) (Math.random() * ((palabra.length() - 1) + 1));
-		return arreglo[random];
-	}
-
 }

@@ -56,16 +56,11 @@ public class AhorcadoServlet extends HttpServlet {
 		dibujarInterfaz();
 
 		// se dibuja al munieco
-		response.getWriter().println(dibujarMunieco());
+		response.getWriter().println(ahorcado.dibujarMunieco());
 
 		// se muestran letras ya usadas
 		response.getWriter().println(
 				"<br>" + "Letras ya usadas: " + letrasUsadas);
-
-		// se muestra el puntaje de la partida actual
-		// response.getWriter().println(
-		// "<br>" + "Puntuacion actual: "
-		// + ahorcado.getPuntuacion().getPuntuacion());
 	}
 
 	private void manejarFrasePista(String frase) throws ServletException,
@@ -73,7 +68,7 @@ public class AhorcadoServlet extends HttpServlet {
 		if (frase != null) {
 			// if (frase.equals("PedirFrase")) {
 			if (!fraseDada) {
-				imprimirFrase();
+				darFrase();
 			} else {
 				response.getWriter().println(
 						"La frase ya se le fue mostrada <br>");
@@ -82,9 +77,13 @@ public class AhorcadoServlet extends HttpServlet {
 		}
 	}
 
-	private void imprimirFrase() throws ServletException, IOException {
+	private void darFrase() throws ServletException, IOException {
+		ahorcado.reducirPuntuacion();
 		response.getWriter().println(
 				"FRASE: " + ahorcado.getPalabra().getFrase() + "<br>");
+		response.getWriter().println(
+				"Su puntaje es: " + ahorcado.getPuntuacion()
+						+ "<br>");
 		fraseDada = true;
 	}
 
@@ -111,7 +110,7 @@ public class AhorcadoServlet extends HttpServlet {
 	}
 
 	private void darPista() throws ServletException, IOException {
-		char letra = ahorcado.getPalabra().obtenerUnaPista();
+		char letra = ahorcado.obtenerUnaPista();
 		cantPistas--;
 		response.getWriter().println(
 				"PISTAS DISPONIBLES: " + cantPistas + "<br>");
@@ -132,28 +131,34 @@ public class AhorcadoServlet extends HttpServlet {
 		res = ahorcado.ingresarLetra(letra);
 		dibujada = ahorcado.dibujarPalabra();
 		response.getWriter().println(res);
-		if (ahorcado.getCantidadErrores() == 6) {
-			response.getWriter().println(
-					"<br>GAME OVER!, la palabra era: "
-							+ ahorcado.getPalabra().getPalabra() + "<br>"
-							+ "Su puntaje es: "
-							+ ahorcado.getPuntuacion().getPuntuacion());
-			response.getWriter().println("<br>" + dibujarMunieco());
-			reiniciarJuego();
+		if (res.equals("Letra no encontrada! <br> PERDIO!!")) {
+			perder();
+		} else {
+			if (res.equals("GANO!!")) {
+				ganar();
+			} else {
+				response.getWriter().println(
+						"<br> Su puntaje es: " + ahorcado.getPuntuacion()
+								+ "<br>");
+			}
 		}
-		if (res.equals("GANO!!")) {
-			response.getWriter()
-					.println(
-							"<br>Palabra adivinada: " + dibujada + "<br>"
-									+ "Su puntaje es: "
-									+ ahorcado.getPuntuacion().getPuntuacion()
-									+ "<br>");
-			reiniciarJuego();
-		}
-		if (!res.isEmpty()) {
-			response.getWriter().println("<br>");
-		}
+	}
 
+	private void perder() throws ServletException, IOException {
+		response.getWriter().println(
+				"<br>GAME OVER!, la palabra era: "
+						+ ahorcado.getPalabra().getPalabra() + "<br>");
+		response.getWriter().println("<br>" + ahorcado.dibujarMunieco());
+		reiniciarJuego();
+	}
+
+	private void ganar() throws ServletException, IOException {
+		response.getWriter()
+				.println(
+						"<br>Palabra adivinada: " + dibujada + "<br>"
+								+ "Su puntaje fue: " + ahorcado.getPuntuacion()
+								+ "<br>");
+		reiniciarJuego();
 	}
 
 	private void reiniciarJuego() throws ServletException, IOException {
@@ -163,6 +168,8 @@ public class AhorcadoServlet extends HttpServlet {
 		letrasUsadas = "";
 		fraseDada = false;
 		ahorcado.setCantidadErrores(0);
+		response.getWriter().println(
+				"Su puntaje es: " + ahorcado.getPuntuacion() + "<br>");
 	}
 
 	private void inicializarJuego(String category, String level)
@@ -173,10 +180,8 @@ public class AhorcadoServlet extends HttpServlet {
 		cantPistas = ahorcado.getPalabra().calcularCantidadPistasPorPalabra();
 		dibujada = ahorcado.dibujarPalabra();
 		fraseDada = false;
-	}
-
-	private String dibujarMunieco() {
-		return ahorcado.dibujarMunieco();
+		response.getWriter().println(
+				"Su puntaje es: " + ahorcado.getPuntuacion() + "<br>");
 	}
 
 	private void dibujarInterfaz() throws ServletException, IOException {

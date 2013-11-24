@@ -3,24 +3,7 @@ public class Juego {
 	private Palabra palabra;
 	private String palabraMostrada;
 	private int cantidadErrores;
-	private Puntuacion puntuacion;
-
-	public Puntuacion getPuntuacion() {
-		return puntuacion;
-	}
-
-	public void setPuntuacion(Puntuacion puntuacion) {
-		this.puntuacion = puntuacion;
-	}
-
-	public int getCantidadErrores() {
-		return cantidadErrores;
-	}
-
-	public void setCantidadErrores(int cantidadErrores) {
-		this.cantidadErrores = cantidadErrores;
-	}
-
+	private int puntuacion;
 	private Diccionario diccionario;
 
 	public Juego() {
@@ -28,7 +11,61 @@ public class Juego {
 		this.diccionario = new Diccionario();
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
 		this.cantidadErrores = 0;
-		this.puntuacion = new Puntuacion();
+		this.puntuacion = 0;
+	}
+	
+	public Juego(String palabra) {
+		this.palabra = new Palabra(palabra);
+		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
+		this.diccionario = new Diccionario();
+		calcularPuntuacion();
+	}
+
+	public Juego(Palabra palabra) {
+		this.palabra = palabra;
+		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
+		this.diccionario = new Diccionario();
+		calcularPuntuacion();
+	}
+	
+	public char obtenerUnaPista() {
+		puntuacion--;
+		char[] arreglo = palabra.getPalabra().toCharArray();
+		char res = ' ';
+		boolean encontrada = false;
+		int random;
+		while (!encontrada) {
+			random = 0 + (int) (Math.random() * ((palabra.getPalabra().length() - 1) + 1));
+			res = arreglo[random];
+			if(!palabraMostrada.contains(String.valueOf(res))) {
+				encontrada = true;
+			}
+		}
+		return res;
+	}
+
+	public void calcularPuntuacion(){
+		puntuacion = palabra.getPalabra().length() * palabra.getDificultad();
+	}
+	
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
+	public void reducirPuntuacion() {
+		puntuacion--;
+	}
+	
+	public int getCantidadErrores() {
+		return cantidadErrores;
+	}
+
+	public void setCantidadErrores(int cantidadErrores) {
+		this.cantidadErrores = cantidadErrores;
 	}
 
 	public Palabra getPalabra() {
@@ -38,30 +75,18 @@ public class Juego {
 	public void setPalabra(Palabra palabra) {
 		this.palabra = palabra;
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
-
+		calcularPuntuacion();
 	}
 
 	public void setPalabraMostrada(String palabra) {
 		this.palabraMostrada = palabra;
-
 	}
 
 	public Palabra obtenerPalabraDeDiccionario(int nivel, String categoria) {
 		palabra = diccionario.obtenerPalabra(categoria, nivel);
 		this.palabraMostrada = palabra.dibujarPalabraVacia();
+		calcularPuntuacion();
 		return palabra;
-	}
-
-	public Juego(String palabra) {
-		this.palabra = new Palabra(palabra);
-		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-		this.diccionario = new Diccionario();
-	}
-
-	public Juego(Palabra palabra) {
-		this.palabra = palabra;
-		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
-		this.diccionario = new Diccionario();
 	}
 
 	public String dibujarPalabra() {
@@ -73,15 +98,13 @@ public class Juego {
 		if (encontrado != -1) {
 			dibujarLetraEnPalabra(letra, encontrado);
 			if (gano()) {
-				this.puntuacion.aumentarPuntuacion();
 				return "GANO!!";
 
 			} else {
 				return "";
 			}
 		} else {
-			this.cantidadErrores++;
-			return mostrarMensajeError();
+			return letraErronea();
 		}
 	}
 
@@ -98,8 +121,15 @@ public class Juego {
 		}
 	}
 
-	public String mostrarMensajeError() {
-		return "Letra no encontrada!";
+	public String letraErronea() {
+		this.cantidadErrores++;
+		if (cantidadErrores == 6){
+			puntuacion = 0;
+			return "Letra no encontrada! <br> PERDIO!!";
+		} else {
+			puntuacion--;
+			return "Letra no encontrada!";
+		}
 	}
 
 	public String dibujarMunieco() {
