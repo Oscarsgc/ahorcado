@@ -1,4 +1,8 @@
-public class Usuario {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+public class Usuario implements java.io.Serializable {
 	private String nombre;
 	private String apellidos;
 	private String email;
@@ -60,6 +64,19 @@ public class Usuario {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void serializar() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("usuarios.ser",true);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(this);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in usuarios.ser");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
 	}
 
 }

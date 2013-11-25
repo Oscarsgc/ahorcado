@@ -1,4 +1,4 @@
-public class Palabra implements java.io.Serializable {
+public class Palabra {
 
 	private String palabra;
 	private int dificultad;

@@ -9,13 +9,14 @@
 	<Center>
 		<h1>Bienvenido al ahorcado</h1>
 		Ingrese sus datos para registrarlo: <br> <br> <br>
-		<Form action="SignUpServlet" name="signUp">
+		<Form action="UsersAdminServlet" name="signUp">
 			Nombre: <input type=text name=nombre value=""><br>
 			Apellidos: <input type=text name=apellido value=""><br>
 			E-mail: <input type=text name=mail value=""><br> Nombre
 			de usuario: <input type=text name=username value=""><br>
 			Clave: <input type=password name=password value=""><br>
-			<input type=submit id=signUp value="Registrarse">
+			Repetir Clave: <input type=password name=confirmacion value=""><br>
+			<input type=submit name=signup id=signup value="Registrarse">
 		</Form>
 		<Form action="index.html" name="volver">
 			<input type=submit id=volver value="Volver">

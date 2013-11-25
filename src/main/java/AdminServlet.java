@@ -18,8 +18,6 @@ public class AdminServlet extends HttpServlet {
 		String categoria = request.getParameter("categoria");
 		ahorcado.agregarPalabraAlDiccionario(palabra,
 				Integer.parseInt(dificultad), categoria);
-		SerializeDemo ser = new SerializeDemo();
-		ser.serializar();
 		// request.getSession().setAttribute("Diccionario", ahorcado);
 		out.println("Este es el diccionario: " + '\n'
 				+ ahorcado.mostrarPalabrasDiccionario() + "<br/>");
