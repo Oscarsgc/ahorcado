@@ -2,21 +2,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-
 public class Puntuacion implements java.io.Serializable {
 	private String puntuacion;
 	private String idUsuario;
-	
-	public Puntuacion(){
+
+	public Puntuacion() {
 		puntuacion = "0";
 		idUsuario = "";
 	}
-	
+
 	public Puntuacion(String puntuacion, String idUsuario) {
 		this.puntuacion = puntuacion;
 		this.idUsuario = idUsuario;
 	}
-	
+
 	public String getIdUsuario() {
 		return idUsuario;
 	}
@@ -32,10 +31,11 @@ public class Puntuacion implements java.io.Serializable {
 	public void setPuntuacion(String puntuacion) {
 		this.puntuacion = puntuacion;
 	}
-	
+
 	public void serializar() {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("puntuaciones.ser",true);
+			FileOutputStream fileOut = new FileOutputStream("puntuaciones.ser",
+					true);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(this);
 			out.close();

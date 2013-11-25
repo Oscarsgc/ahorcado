@@ -44,7 +44,7 @@ public class AdministradorDeUsuarios {
 		}
 		return false;
 	}
-	
+
 	public void cerrarSesion() {
 		if (userLoged != null)
 			userLoged = null;
@@ -70,15 +70,16 @@ public class AdministradorDeUsuarios {
 			c.printStackTrace();
 		}
 	}
-	
+
 	public void registrarPuntuacion(String puntuacion) {
 		if (userLoged != null) {
-			Puntuacion points = new Puntuacion(puntuacion, userLoged.getIdUsuario());
+			Puntuacion points = new Puntuacion(puntuacion,
+					userLoged.getIdUsuario());
 			puntuaciones.add(points);
 			points.serializar();
 		}
 	}
-	
+
 	public void deserializarPuntuaciones() {
 		Puntuacion puntuacion = null;
 		boolean fin = false;
@@ -100,4 +101,16 @@ public class AdministradorDeUsuarios {
 		}
 	}
 
+	public String BuscarUsuario(String userId) {
+		String res = "";
+		int total = 0;
+		for (int i = 0; i < puntuaciones.size(); i++) {
+			if (puntuaciones.get(i).getIdUsuario().equals(userId)) {
+				res += puntuaciones.get(i).getPuntuacion() + "<br>";
+				total += Integer.parseInt(puntuaciones.get(i).getPuntuacion());
+			}
+		}
+		res += "Total = " + total + "<br>";
+		return res;
+	}
 }
