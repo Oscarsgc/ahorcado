@@ -1,27 +1,29 @@
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AdministradorDeUsuarios {
 	private ArrayList<Usuario> usuarios;
 	private ArrayList<Puntuacion> puntuaciones;
-	private Usuario userLoged;
+	private Usuario loggedUser;
 
 	public AdministradorDeUsuarios() {
 		usuarios = new ArrayList<Usuario>();
 		puntuaciones = new ArrayList<Puntuacion>();
 		deserializarUsuarios();
 		deserializarPuntuaciones();
-		userLoged = null;
+		loggedUser = null;
 	}
 
-	public Usuario isUserLogued() {
-		return userLoged;
+	public Usuario getLoggedUser() {
+		return loggedUser;
 	}
 
-	public void setUserLogued(Usuario userLogued) {
-		this.userLoged = userLogued;
+	public void setLoggedUser(Usuario userLogued) {
+		this.loggedUser = userLogued;
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
@@ -30,7 +32,7 @@ public class AdministradorDeUsuarios {
 
 	public void registrarUsuario(Usuario user) {
 		usuarios.add(user);
-		userLoged = user;
+		loggedUser = user;
 		user.serializar();
 	}
 
@@ -38,7 +40,7 @@ public class AdministradorDeUsuarios {
 		for (int i = 0; i < usuarios.size(); i++) {
 			if (username.equals(usuarios.get(i).getIdUsuario())
 					&& password.equals(usuarios.get(i).getPassword())) {
-				userLoged = usuarios.get(i);
+				loggedUser = usuarios.get(i);
 				return true;
 			}
 		}
@@ -46,8 +48,8 @@ public class AdministradorDeUsuarios {
 	}
 
 	public void cerrarSesion() {
-		if (userLoged != null)
-			userLoged = null;
+		if (loggedUser != null)
+			loggedUser = null;
 	}
 
 	public void deserializarUsuarios() {
@@ -72,9 +74,9 @@ public class AdministradorDeUsuarios {
 	}
 
 	public void registrarPuntuacion(String puntuacion) {
-		if (userLoged != null) {
+		if (loggedUser != null) {
 			Puntuacion points = new Puntuacion(puntuacion,
-					userLoged.getIdUsuario());
+					loggedUser.getIdUsuario());
 			puntuaciones.add(points);
 			points.serializar();
 		}
@@ -109,27 +111,74 @@ public class AdministradorDeUsuarios {
 		}
 		return res;
 	}
-	
+
 	public boolean editarUsuario(Usuario user) {
-		for (int i = 0; i < usuarios.size(); i++) {
-			if (usuarios.get(i).getIdUsuario().equals(userLoged.getIdUsuario())) {
-				usuarios.set(i, user);
-				editarPuntuacionesDeUsuario(user.getIdUsuario());
-				userLoged = user;
-				return true;
+		if (loggedUser != null) {
+			user.setPassword(loggedUser.getPassword());
+			for (int i = 0; i < usuarios.size(); i++) {
+				if (usuarios.get(i).getIdUsuario()
+						.equals(loggedUser.getIdUsuario())) {
+					usuarios.set(i, user);
+					editarPuntuacionesDeUsuario(user.getIdUsuario());
+					editarArchivoUsuarios();
+					loggedUser = user;
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-	
+
 	public void editarPuntuacionesDeUsuario(String userId) {
 		Puntuacion temp = new Puntuacion();
 		temp.setIdUsuario(userId);
 		for (int i = 0; i < puntuaciones.size(); i++) {
-			if (puntuaciones.get(i).getIdUsuario().equals(userLoged.getIdUsuario())) {
+			if (puntuaciones.get(i).getIdUsuario()
+					.equals(loggedUser.getIdUsuario())) {
 				temp.setPuntuacion(puntuaciones.get(i).getPuntuacion());
 				puntuaciones.set(i, temp);
 			}
+		}
+		editarArchivoPuntuaciones();
+	}
+
+	public void editarArchivoUsuarios() {
+		limpiarArchivoUsuarios();
+		for (int i = 1; i < usuarios.size(); i++) {
+			usuarios.get(i).serializar();
+		}
+	}
+
+	public void limpiarArchivoUsuarios() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("usuarios.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(usuarios.get(0));
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in usuarios.ser");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	public void editarArchivoPuntuaciones() {
+		limpiarArchivoPuntuaciones();
+		for (int i = 1; i < puntuaciones.size(); i++) {
+			puntuaciones.get(i).serializar();
+		}
+	}
+
+	public void limpiarArchivoPuntuaciones() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("puntuaciones.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(puntuaciones.get(0));
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in puntuaciones.ser");
+		} catch (IOException i) {
+			i.printStackTrace();
 		}
 	}
 
@@ -145,28 +194,30 @@ public class AdministradorDeUsuarios {
 		res += "Total = " + total + "<br>";
 		return res;
 	}
-	
-	public void ordenarPuntuacionesAscendente(){
+
+	public void ordenarPuntuacionesAscendente() {
 		Puntuacion temp;
 		for (int i = 1; i < puntuaciones.size(); i++) {
-			for (int j = 0; j < puntuaciones.size()-1; j++) {
-				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) > Integer.parseInt(puntuaciones.get(j+1).getPuntuacion())){
-				    temp = puntuaciones.get(j);
-				    puntuaciones.set(j, puntuaciones.get(j+1));
-				    puntuaciones.set(j+1, temp);
+			for (int j = 0; j < puntuaciones.size() - 1; j++) {
+				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) > Integer
+						.parseInt(puntuaciones.get(j + 1).getPuntuacion())) {
+					temp = puntuaciones.get(j);
+					puntuaciones.set(j, puntuaciones.get(j + 1));
+					puntuaciones.set(j + 1, temp);
 				}
 			}
 		}
 	}
-	
-	public void ordenarPuntuacionesDescendente(){
+
+	public void ordenarPuntuacionesDescendente() {
 		Puntuacion temp;
 		for (int i = 1; i < puntuaciones.size(); i++) {
-			for (int j = 0; j < puntuaciones.size()-1; j++) {
-				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) < Integer.parseInt(puntuaciones.get(j+1).getPuntuacion())){
-				    temp = puntuaciones.get(j);
-				    puntuaciones.set(j, puntuaciones.get(j+1));
-				    puntuaciones.set(j+1, temp);
+			for (int j = 0; j < puntuaciones.size() - 1; j++) {
+				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) < Integer
+						.parseInt(puntuaciones.get(j + 1).getPuntuacion())) {
+					temp = puntuaciones.get(j);
+					puntuaciones.set(j, puntuaciones.get(j + 1));
+					puntuaciones.set(j + 1, temp);
 				}
 			}
 		}

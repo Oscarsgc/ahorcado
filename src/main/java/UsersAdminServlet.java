@@ -29,32 +29,66 @@ public class UsersAdminServlet extends HttpServlet {
 				if (puntuacion != null) {
 					guardarPuntuacion(puntuacion);
 				} else {
-					String filtrar = request.getParameter("filtrar");
-					if (filtrar != null) {
-						String username = request.getParameter("username");
-						response.getWriter().println(
-								administrador.buscarPuntuacionesUsuario(username));
+					String editar = request.getParameter("editar");
+					if (editar != null) {
+						if (editar.equals("editar")) {
+							editarDatosUsuario();
+						} else {
+							interazEditarUsuario();
+						}
 					} else {
-						String ordenar = request.getParameter("ordenar");
-						if (ordenar != null) {
-							String sentido = request.getParameter("sentido");
-							if (sentido.equals("ascendente")) {
-								administrador.ordenarPuntuacionesAscendente();
-								response.getWriter().println(
-										administrador.mostrarTodos());
+						String filtrar = request.getParameter("filtrar");
+						if (filtrar != null) {
+							String username = request.getParameter("username");
+							response.getWriter().println(
+									administrador
+											.buscarPuntuacionesUsuario(username));
+						} else {
+							String ordenar = request.getParameter("ordenar");
+							if (ordenar != null) {
+								String sentido = request
+										.getParameter("sentido");
+								if (sentido.equals("ascendente")) {
+									administrador
+											.ordenarPuntuacionesAscendente();
+									response.getWriter().println(
+											administrador.mostrarTodos());
+								} else {
+									administrador
+											.ordenarPuntuacionesDescendente();
+									response.getWriter().println(
+											administrador.mostrarTodos());
+								}
 							} else {
-								administrador.ordenarPuntuacionesDescendente();
 								response.getWriter().println(
 										administrador.mostrarTodos());
 							}
-						} else {
-							response.getWriter().println(
-									administrador.mostrarTodos());
 						}
+						dibujarInterfaz();
 					}
-					dibujarInterfaz();
 				}
 			}
+		}
+	}
+
+	private void editarDatosUsuario() throws IOException,
+			ServletException {
+		String nombre = request
+				.getParameter("nombre");
+		String apellido = request
+				.getParameter("apellido");
+		String username = request
+				.getParameter("username");
+		String email = request.getParameter("mail");
+		if(apellido!=null && nombre!=null && username!=null && email!=null) {
+			Usuario user = new Usuario(nombre, apellido,
+					email, username, "");
+			if (administrador.editarUsuario(user))
+				response.sendRedirect("index.html");
+			else
+				response.sendRedirect("UsersAdminServlet?editar=EditarDatos&error=error");
+		} else {
+			response.sendRedirect("UsersAdminServlet?editar=EditarDatos&error=faltan");
 		}
 	}
 
@@ -98,6 +132,37 @@ public class UsersAdminServlet extends HttpServlet {
 					"Todos los datos deben ser llenados<br>");
 			response.sendRedirect("signUp.html");
 
+		}
+	}
+
+	private void interazEditarUsuario() throws ServletException, IOException {
+		if (administrador.getLoggedUser() != null) {
+			PrintWriter out = response.getWriter();
+			String error = request.getParameter("error");
+			if(error !=null){
+				if(error.equals("error"))
+					out.println("Error al editar usuario </br>");
+				else
+					out.println("Debe llenar todos los campos</br>");
+			}
+			out.println("</br>");
+			out.println("<FORM action=UsersAdminServlet>");
+			out.println("Nombre:  Nombre: <input type=text name=nombre value="
+					+ administrador.getLoggedUser().getNombre()
+					+ "><br>"
+					+ "Apellidos: <input type=text name=apellido value="
+					+ administrador.getLoggedUser().getApellidos()
+					+ "><br>"
+					+ "E-mail: <input type=text name=mail value="
+					+ administrador.getLoggedUser().getEmail()
+					+ "><br>"
+					+ "Nombre	de usuario: <input type=text name=username value="
+					+ administrador.getLoggedUser().getIdUsuario() + "><br>");
+			out.println("<input type=submit name=editar value=editar>");
+			out.println("</FORM>");
+		} else {
+			response.getWriter().println(
+					"Debe iniciar sesion para realizar esta operacion");
 		}
 	}
 
