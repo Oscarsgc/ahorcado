@@ -109,8 +109,31 @@ public class AdministradorDeUsuarios {
 		}
 		return res;
 	}
+	
+	public boolean editarUsuario(Usuario user) {
+		for (int i = 0; i < usuarios.size(); i++) {
+			if (usuarios.get(i).getIdUsuario().equals(userLoged.getIdUsuario())) {
+				usuarios.set(i, user);
+				editarPuntuacionesDeUsuario(user.getIdUsuario());
+				userLoged = user;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void editarPuntuacionesDeUsuario(String userId) {
+		Puntuacion temp = new Puntuacion();
+		temp.setIdUsuario(userId);
+		for (int i = 0; i < puntuaciones.size(); i++) {
+			if (puntuaciones.get(i).getIdUsuario().equals(userLoged.getIdUsuario())) {
+				temp.setPuntuacion(puntuaciones.get(i).getPuntuacion());
+				puntuaciones.set(i, temp);
+			}
+		}
+	}
 
-	public String buscarUsuario(String userId) {
+	public String buscarPuntuacionesUsuario(String userId) {
 		String res = "";
 		int total = 0;
 		for (int i = 0; i < puntuaciones.size(); i++) {
@@ -121,5 +144,31 @@ public class AdministradorDeUsuarios {
 		}
 		res += "Total = " + total + "<br>";
 		return res;
+	}
+	
+	public void ordenarPuntuacionesAscendente(){
+		Puntuacion temp;
+		for (int i = 1; i < puntuaciones.size(); i++) {
+			for (int j = 0; j < puntuaciones.size()-1; j++) {
+				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) > Integer.parseInt(puntuaciones.get(j+1).getPuntuacion())){
+				    temp = puntuaciones.get(j);
+				    puntuaciones.set(j, puntuaciones.get(j+1));
+				    puntuaciones.set(j+1, temp);
+				}
+			}
+		}
+	}
+	
+	public void ordenarPuntuacionesDescendente(){
+		Puntuacion temp;
+		for (int i = 1; i < puntuaciones.size(); i++) {
+			for (int j = 0; j < puntuaciones.size()-1; j++) {
+				if (Integer.parseInt(puntuaciones.get(j).getPuntuacion()) < Integer.parseInt(puntuaciones.get(j+1).getPuntuacion())){
+				    temp = puntuaciones.get(j);
+				    puntuaciones.set(j, puntuaciones.get(j+1));
+				    puntuaciones.set(j+1, temp);
+				}
+			}
+		}
 	}
 }

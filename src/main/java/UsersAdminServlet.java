@@ -32,17 +32,34 @@ public class UsersAdminServlet extends HttpServlet {
 					String filtrar = request.getParameter("filtrar");
 					if (filtrar != null) {
 						String username = request.getParameter("username");
-						response.getWriter().println(administrador.buscarUsuario(username));
+						response.getWriter().println(
+								administrador.buscarPuntuacionesUsuario(username));
 					} else {
-						response.getWriter().println(administrador.mostrarTodos());
+						String ordenar = request.getParameter("ordenar");
+						if (ordenar != null) {
+							String sentido = request.getParameter("sentido");
+							if (sentido.equals("ascendente")) {
+								administrador.ordenarPuntuacionesAscendente();
+								response.getWriter().println(
+										administrador.mostrarTodos());
+							} else {
+								administrador.ordenarPuntuacionesDescendente();
+								response.getWriter().println(
+										administrador.mostrarTodos());
+							}
+						} else {
+							response.getWriter().println(
+									administrador.mostrarTodos());
+						}
 					}
 					dibujarInterfaz();
 				}
 			}
 		}
 	}
-	
-	private void guardarPuntuacion(String puntuacion) throws IOException, ServletException {
+
+	private void guardarPuntuacion(String puntuacion) throws IOException,
+			ServletException {
 		administrador.registrarPuntuacion(puntuacion);
 		response.sendRedirect("AhorcadoServlet");
 	}
@@ -83,7 +100,7 @@ public class UsersAdminServlet extends HttpServlet {
 
 		}
 	}
-	
+
 	private void dibujarInterfaz() throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.println("</br>");
@@ -91,7 +108,13 @@ public class UsersAdminServlet extends HttpServlet {
 		out.println("Ingrese ID de Usuario:  <input type=text name=username>");
 		out.println("<input type=submit name=filtrar value=filtrar>");
 		out.println("</FORM>");
-		
+
+		out.println("<FORM action=UsersAdminServlet>");
+		out.println("Ordenar de forma:  <input type=radio name=sentido value=ascendente checked> Ascendente "
+				+ "<input type=radio name=sentido value=descendente> Descendente<br> ");
+		out.println("<input type=submit name=ordenar value=ordenar>");
+		out.println("</FORM>");
+
 		out.println("<FORM action=index.html>");
 		out.println("<input type=submit name=volver value=Volver>");
 		out.println("</FORM>");
