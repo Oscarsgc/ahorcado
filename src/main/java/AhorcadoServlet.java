@@ -51,16 +51,16 @@ public class AhorcadoServlet extends HttpServlet {
 
 		// se dibuja la palabra del juego
 		response.getWriter().println("<br>" + ahorcado.dibujarPalabra());
-
-		// se dibuja el resto de la interfaz (botones, textboxes, etc)
-		dibujarInterfaz();
-
+		
 		// se dibuja al munieco
-		response.getWriter().println(ahorcado.dibujarMunieco());
-
+		response.getWriter().println("<br>" + ahorcado.dibujarMunieco());
+		
 		// se muestran letras ya usadas
 		response.getWriter().println(
 				"<br>" + "Letras ya usadas: " + letrasUsadas);
+
+		// se dibuja el resto de la interfaz (botones, textboxes, etc)
+		dibujarInterfaz();
 	}
 
 	private void manejarFrasePista(String frase) throws ServletException,
@@ -153,12 +153,14 @@ public class AhorcadoServlet extends HttpServlet {
 	}
 
 	private void ganar() throws ServletException, IOException {
+		int puntuacion = ahorcado.getPuntuacion();
 		response.getWriter()
 				.println(
 						"<br>Palabra adivinada: " + dibujada + "<br>"
 								+ "Su puntaje fue: " + ahorcado.getPuntuacion()
 								+ "<br>");
 		reiniciarJuego();
+		response.sendRedirect("UsersAdminServlet?puntuacion="+puntuacion);
 	}
 
 	private void reiniciarJuego() throws ServletException, IOException {

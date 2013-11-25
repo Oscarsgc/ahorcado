@@ -21,26 +21,34 @@ public class UsersAdminServlet extends HttpServlet {
 		if (signup != null) {
 			registrarUsuario();
 		} else {
-			iniciarSesion();
+			String login = request.getParameter("login");
+			if (login != null) {
+				iniciarSesion();
+			} else {
+				String puntuacion = request.getParameter("puntuacion");
+				if (puntuacion != null) {
+					guardarPuntuacion(puntuacion);
+				}
+			}
 		}
+	}
+	
+	private void guardarPuntuacion(String puntuacion) throws IOException, ServletException {
+		administrador.registrarPuntuacion(puntuacion);
+		response.sendRedirect("AhorcadoServlet");
 	}
 
 	private void iniciarSesion() throws IOException, ServletException {
-		String login = request.getParameter("login");
-		if (login != null) {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			if (administrador.iniciarSesion(username, password)) {
 
-				response.getWriter().println(
-						"Usuario autentificado correctamente<br>");
-				response.sendRedirect("seleccionarNivel.html");
-			} else {
-
-				response.getWriter().println(
-						"Usuario o password inexistentes<br>");
-				response.sendRedirect("login.html");
-			}
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		if (administrador.iniciarSesion(username, password)) {
+			response.getWriter().println(
+					"Usuario autentificado correctamente<br>");
+			response.sendRedirect("seleccionarNivel.html");
+		} else {
+			response.getWriter().println("Usuario o password inexistentes<br>");
+			response.sendRedirect("login.html");
 		}
 	}
 

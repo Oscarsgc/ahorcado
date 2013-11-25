@@ -5,11 +5,14 @@ import java.util.ArrayList;
 
 public class AdministradorDeUsuarios {
 	private ArrayList<Usuario> usuarios;
+	private ArrayList<Puntuacion> puntuaciones;
 	private Usuario userLoged;
 
 	public AdministradorDeUsuarios() {
 		usuarios = new ArrayList<Usuario>();
-		deserializar();
+		puntuaciones = new ArrayList<Puntuacion>();
+		deserializarUsuarios();
+		deserializarPuntuaciones();
 		userLoged = null;
 	}
 
@@ -47,7 +50,7 @@ public class AdministradorDeUsuarios {
 			userLoged = null;
 	}
 
-	public void deserializar() {
+	public void deserializarUsuarios() {
 		Usuario user = null;
 		boolean fin = false;
 		try {
@@ -64,6 +67,35 @@ public class AdministradorDeUsuarios {
 			i.printStackTrace();
 		} catch (ClassNotFoundException c) {
 			System.out.println("Usuario class not found");
+			c.printStackTrace();
+		}
+	}
+	
+	public void registrarPuntuacion(String puntuacion) {
+		if (userLoged != null) {
+			Puntuacion points = new Puntuacion(puntuacion, userLoged.getIdUsuario());
+			puntuaciones.add(points);
+			points.serializar();
+		}
+	}
+	
+	public void deserializarPuntuaciones() {
+		Puntuacion puntuacion = null;
+		boolean fin = false;
+		try {
+			FileInputStream fileIn = new FileInputStream("puntuaciones.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			while (!fin) {
+				puntuacion = (Puntuacion) in.readObject();
+				puntuaciones.add(puntuacion);
+				System.out.println("Puntuacion obtenida correctamente");
+			}
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		} catch (ClassNotFoundException c) {
+			System.out.println("Puntuacion class not found");
 			c.printStackTrace();
 		}
 	}
