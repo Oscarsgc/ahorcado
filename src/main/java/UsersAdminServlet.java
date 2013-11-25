@@ -12,8 +12,8 @@ public class UsersAdminServlet extends HttpServlet {
 	private AdministradorDeUsuarios administrador = new AdministradorDeUsuarios();
 
 	@Override
-	protected void service(HttpServletRequest req,
-			HttpServletResponse resp) throws IOException, ServletException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
 		response = resp;
 		request = req;
 		response.setContentType("text/html");
@@ -24,22 +24,26 @@ public class UsersAdminServlet extends HttpServlet {
 			iniciarSesion();
 		}
 	}
-	
+
 	private void iniciarSesion() throws IOException, ServletException {
 		String login = request.getParameter("login");
 		if (login != null) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			if (administrador.iniciarSesion(username, password)){
-				response.encodeRedirectURL("seleccionarNivel.html");
-				response.getWriter().println("Usuario autentificado correctamente<br>");
+			if (administrador.iniciarSesion(username, password)) {
+
+				response.getWriter().println(
+						"Usuario autentificado correctamente<br>");
+				response.sendRedirect("seleccionarNivel.html");
 			} else {
-				response.encodeRedirectURL("login.html");
-				response.getWriter().println("Usuario o password inexistentes<br>");
+
+				response.getWriter().println(
+						"Usuario o password inexistentes<br>");
+				response.sendRedirect("login.html");
 			}
 		}
 	}
-	
+
 	private void registrarUsuario() throws IOException, ServletException {
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
@@ -48,13 +52,18 @@ public class UsersAdminServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String confirmacion = request.getParameter("confirmacion");
 		if (password.equals(confirmacion)) {
-			Usuario user = new Usuario(nombre, apellido, email, username, password);
+			Usuario user = new Usuario(nombre, apellido, email, username,
+					password);
 			administrador.registrarUsuario(user);
-			response.encodeRedirectURL("seleccionarNivel.html");
-			response.getWriter().println("Usuario autentificado correctamente<br>");
+			response.getWriter().println(
+					"Usuario autentificado correctamente<br>");
+			response.sendRedirect("seleccionarNivel.html");
+
 		} else {
-			response.encodeRedirectURL("signUp.html");
-			response.getWriter().println("Todos los datos deben ser llenados<br>");
+			response.getWriter().println(
+					"Todos los datos deben ser llenados<br>");
+			response.sendRedirect("signUp.html");
+
 		}
 	}
 }
