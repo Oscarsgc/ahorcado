@@ -28,6 +28,15 @@ public class UsersAdminServlet extends HttpServlet {
 				String puntuacion = request.getParameter("puntuacion");
 				if (puntuacion != null) {
 					guardarPuntuacion(puntuacion);
+				} else {
+					String filtrar = request.getParameter("filtrar");
+					if (filtrar != null) {
+						String username = request.getParameter("username");
+						response.getWriter().println(administrador.buscarUsuario(username));
+					} else {
+						response.getWriter().println(administrador.mostrarTodos());
+					}
+					dibujarInterfaz();
 				}
 			}
 		}
@@ -73,5 +82,18 @@ public class UsersAdminServlet extends HttpServlet {
 			response.sendRedirect("signUp.html");
 
 		}
+	}
+	
+	private void dibujarInterfaz() throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("</br>");
+		out.println("<FORM action=UsersAdminServlet>");
+		out.println("Ingrese ID de Usuario:  <input type=text name=username>");
+		out.println("<input type=submit name=filtrar value=filtrar>");
+		out.println("</FORM>");
+		
+		out.println("<FORM action=index.html>");
+		out.println("<input type=submit name=volver value=Volver>");
+		out.println("</FORM>");
 	}
 }

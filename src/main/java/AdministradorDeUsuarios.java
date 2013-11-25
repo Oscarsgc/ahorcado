@@ -101,7 +101,16 @@ public class AdministradorDeUsuarios {
 		}
 	}
 
-	public String BuscarUsuario(String userId) {
+	public String mostrarTodos() {
+		String res = "";
+		for (int i = 0; i < puntuaciones.size(); i++) {
+			res += puntuaciones.get(i).getIdUsuario() + ": "
+					+ puntuaciones.get(i).getPuntuacion() + "<br>";
+		}
+		return res;
+	}
+
+	public String buscarUsuario(String userId) {
 		String res = "";
 		int total = 0;
 		for (int i = 0; i < puntuaciones.size(); i++) {
