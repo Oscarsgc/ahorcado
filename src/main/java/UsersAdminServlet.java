@@ -31,43 +31,55 @@ public class UsersAdminServlet extends HttpServlet {
 				} else {
 					String editar = request.getParameter("editar");
 					if (editar != null) {
-						if (editar.equals("editar")) {
-							editarDatosUsuario();
-						} else {
-							interazEditarUsuario();
-						}
+						manejarEdicionDeUsuarios(editar);
 					} else {
-						String filtrar = request.getParameter("filtrar");
-						if (filtrar != null) {
-							String username = request.getParameter("username");
-							response.getWriter().println(
-									administrador
-											.buscarPuntuacionesUsuario(username));
-						} else {
-							String ordenar = request.getParameter("ordenar");
-							if (ordenar != null) {
-								String sentido = request
-										.getParameter("sentido");
-								if (sentido.equals("ascendente")) {
-									administrador
-											.ordenarPuntuacionesAscendente();
-									response.getWriter().println(
-											administrador.mostrarTodos());
-								} else {
-									administrador
-											.ordenarPuntuacionesDescendente();
-									response.getWriter().println(
-											administrador.mostrarTodos());
-								}
-							} else {
-								response.getWriter().println(
-										administrador.mostrarTodos());
-							}
-						}
-						dibujarInterfaz();
+						manejarPuntuaciones();
 					}
 				}
 			}
+		}
+	}
+	
+	private void manejarEdicionDeUsuarios(String editar) throws IOException, ServletException {
+		if (editar.equals("editar")) {
+			editarDatosUsuario();
+		} else {
+			interazEditarUsuario();
+		}
+	}
+	
+	private void manejarPuntuaciones() throws IOException, ServletException {
+		String filtrar = request.getParameter("filtrar");
+		if (filtrar != null) {
+			String username = request.getParameter("username");
+			response.getWriter().println(
+					administrador
+							.buscarPuntuacionesUsuario(username));
+		} else {
+			mostrarPuntuaciones();
+		}
+		dibujarInterfaz();
+	}
+	
+	private void mostrarPuntuaciones() throws IOException, ServletException {
+		String ordenar = request.getParameter("ordenar");
+		if (ordenar != null) {
+			String sentido = request
+					.getParameter("sentido");
+			if (sentido.equals("ascendente")) {
+				administrador
+						.ordenarPuntuacionesAscendente();
+				response.getWriter().println(
+						administrador.mostrarTodos());
+			} else {
+				administrador
+						.ordenarPuntuacionesDescendente();
+				response.getWriter().println(
+						administrador.mostrarTodos());
+			}
+		} else {
+			response.getWriter().println(
+					administrador.mostrarTodos());
 		}
 	}
 
