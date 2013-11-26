@@ -13,7 +13,7 @@ public class Juego {
 		this.cantidadErrores = 0;
 		this.puntuacion = 0;
 	}
-	
+
 	public Juego(String palabra) {
 		this.palabra = new Palabra(palabra);
 		this.palabraMostrada = this.palabra.dibujarPalabraVacia();
@@ -27,7 +27,7 @@ public class Juego {
 		this.diccionario = new Diccionario();
 		calcularPuntuacion();
 	}
-	
+
 	public char obtenerUnaPista() {
 		puntuacion--;
 		char[] arreglo = palabra.getPalabra().toCharArray();
@@ -37,17 +37,17 @@ public class Juego {
 		while (!encontrada) {
 			random = 0 + (int) (Math.random() * ((palabra.getPalabra().length() - 1) + 1));
 			res = arreglo[random];
-			if(!palabraMostrada.contains(String.valueOf(res))) {
+			if (!palabraMostrada.contains(String.valueOf(res))) {
 				encontrada = true;
 			}
 		}
 		return res;
 	}
 
-	public void calcularPuntuacion(){
+	public void calcularPuntuacion() {
 		puntuacion = palabra.getPalabra().length() * palabra.getDificultad();
 	}
-	
+
 	public int getPuntuacion() {
 		return puntuacion;
 	}
@@ -55,11 +55,11 @@ public class Juego {
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion = puntuacion;
 	}
-	
+
 	public void reducirPuntuacion() {
 		puntuacion--;
 	}
-	
+
 	public int getCantidadErrores() {
 		return cantidadErrores;
 	}
@@ -110,9 +110,11 @@ public class Juego {
 
 	public void dibujarLetraEnPalabra(char letra, int pos) {
 		char[] mostrada = palabraMostrada.toCharArray();
-		char[] original = palabra.getPalabra().toCharArray();
-		for (int i = pos; i < original.length; i++) {
-			if (original[i] == letra)
+		// char[] original = palabra.getPalabra().toCharArray();
+		char[] mayus = palabra.getPalabra().toUpperCase().toCharArray();
+		char[] minus = palabra.getPalabra().toLowerCase().toCharArray();
+		for (int i = pos; i < mayus.length; i++) {
+			if (mayus[i] == letra || minus[i] == letra)
 				mostrada[i * 2] = letra;
 		}
 		palabraMostrada = "";
@@ -123,7 +125,7 @@ public class Juego {
 
 	public String letraErronea() {
 		this.cantidadErrores++;
-		if (cantidadErrores == 6){
+		if (cantidadErrores == 6) {
 			puntuacion = 0;
 			return "Letra no encontrada! <br> PERDIO!!";
 		} else {

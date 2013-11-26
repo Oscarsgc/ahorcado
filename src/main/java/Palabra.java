@@ -74,16 +74,32 @@ public class Palabra {
 		return palabraMostrada;
 	}
 
+	// public int buscarLetra(char letra) {
+	// int res = -1;
+	// char[] word = palabra.toCharArray();
+	// for (int i = 0; i < word.length && res == -1; i++) {
+	// if (word[i] == letra) {
+	// res = i;
+	// }
+	// }
+	// return res;
+	// }
+	
 	public int buscarLetra(char letra) {
 		int res = -1;
-		char[] word = palabra.toCharArray();
-		for (int i = 0; i < word.length && res == -1; i++) {
-			if (word[i] == letra) {
+		String minus = palabra.toLowerCase();
+		String mayus = palabra.toUpperCase();
+		for (int i = 0; i < palabra.length() && res == -1; i++) {
+			if(minus.charAt(i) == letra || mayus.charAt(i)==letra) {
 				res = i;
 			}
 		}
 		return res;
 	}
+	
+	
+	
+	
 
 	public int calcularCantidadPistasPorPalabra() {
 		cantPistas = palabra.length() / 3;
