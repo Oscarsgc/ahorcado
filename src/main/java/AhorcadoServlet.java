@@ -51,10 +51,10 @@ public class AhorcadoServlet extends HttpServlet {
 
 		// se dibuja la palabra del juego
 		response.getWriter().println("<br>" + ahorcado.dibujarPalabra());
-		
+
 		// se dibuja al munieco
 		response.getWriter().println("<br>" + ahorcado.dibujarMunieco());
-		
+
 		// se muestran letras ya usadas
 		response.getWriter().println(
 				"<br>" + "Letras ya usadas: " + letrasUsadas);
@@ -82,8 +82,7 @@ public class AhorcadoServlet extends HttpServlet {
 		response.getWriter().println(
 				"FRASE: " + ahorcado.getPalabra().getFrase() + "<br>");
 		response.getWriter().println(
-				"Su puntaje es: " + ahorcado.getPuntuacion()
-						+ "<br>");
+				"Su puntaje es: " + ahorcado.getPuntuacion() + "<br>");
 		fraseDada = true;
 	}
 
@@ -154,13 +153,14 @@ public class AhorcadoServlet extends HttpServlet {
 
 	private void ganar() throws ServletException, IOException {
 		int puntuacion = ahorcado.getPuntuacion();
-		response.getWriter()
-				.println(
-						"<br>Palabra adivinada: " + dibujada + "<br>"
-								+ "Su puntaje fue: " + ahorcado.getPuntuacion()
-								+ "<br>");
+		String palabra = ahorcado.getPalabra().getPalabra();
+		response.getWriter().println(
+				"<br>Palabra adivinada: " + dibujada + "<br>"
+						+ "Su puntaje fue: " + ahorcado.getPuntuacion()
+						+ "<br>");
 		reiniciarJuego();
-		response.sendRedirect("UsersAdminServlet?puntuacion="+puntuacion);
+		response.sendRedirect("UsersAdminServlet?puntuacion=" + puntuacion
+				+ "&palabra=" + palabra);
 	}
 
 	private void reiniciarJuego() throws ServletException, IOException {

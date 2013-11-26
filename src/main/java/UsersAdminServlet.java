@@ -27,7 +27,8 @@ public class UsersAdminServlet extends HttpServlet {
 			} else {
 				String puntuacion = request.getParameter("puntuacion");
 				if (puntuacion != null) {
-					guardarPuntuacion(puntuacion);
+					String palabra = request.getParameter("palabra");
+					guardarPuntuacion(puntuacion, palabra);
 				} else {
 					String editar = request.getParameter("editar");
 					if (editar != null) {
@@ -39,62 +40,52 @@ public class UsersAdminServlet extends HttpServlet {
 			}
 		}
 	}
-	
-	private void manejarEdicionDeUsuarios(String editar) throws IOException, ServletException {
+
+	private void manejarEdicionDeUsuarios(String editar) throws IOException,
+			ServletException {
 		if (editar.equals("editar")) {
 			editarDatosUsuario();
 		} else {
 			interazEditarUsuario();
 		}
 	}
-	
+
 	private void manejarPuntuaciones() throws IOException, ServletException {
 		String filtrar = request.getParameter("filtrar");
 		if (filtrar != null) {
 			String username = request.getParameter("username");
 			response.getWriter().println(
-					administrador
-							.buscarPuntuacionesUsuario(username));
+					administrador.buscarPuntuacionesUsuario(username));
 		} else {
 			mostrarPuntuaciones();
 		}
 		dibujarInterfaz();
 	}
-	
+
 	private void mostrarPuntuaciones() throws IOException, ServletException {
 		String ordenar = request.getParameter("ordenar");
 		if (ordenar != null) {
-			String sentido = request
-					.getParameter("sentido");
+			String sentido = request.getParameter("sentido");
 			if (sentido.equals("ascendente")) {
-				administrador
-						.ordenarPuntuacionesAscendente();
-				response.getWriter().println(
-						administrador.mostrarTodos());
+				administrador.ordenarPuntuacionesAscendente();
+				response.getWriter().println(administrador.mostrarTodos());
 			} else {
-				administrador
-						.ordenarPuntuacionesDescendente();
-				response.getWriter().println(
-						administrador.mostrarTodos());
+				administrador.ordenarPuntuacionesDescendente();
+				response.getWriter().println(administrador.mostrarTodos());
 			}
 		} else {
-			response.getWriter().println(
-					administrador.mostrarTodos());
+			response.getWriter().println(administrador.mostrarTodos());
 		}
 	}
 
-	private void editarDatosUsuario() throws IOException,
-			ServletException {
-		String nombre = request
-				.getParameter("nombre");
-		String apellido = request
-				.getParameter("apellido");
-		String username = request
-				.getParameter("username");
+	private void editarDatosUsuario() throws IOException, ServletException {
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String username = request.getParameter("username");
 		String email = request.getParameter("mail");
-		if(apellido!=null && nombre!=null && username!=null && email!=null) {
-			Usuario user = new Usuario(nombre, apellido,
-					email, username, "");
+		if (apellido != null && nombre != null && username != null
+				&& email != null) {
+			Usuario user = new Usuario(nombre, apellido, email, username, "");
 			if (administrador.editarUsuario(user))
 				response.sendRedirect("index.html");
 			else
@@ -104,9 +95,9 @@ public class UsersAdminServlet extends HttpServlet {
 		}
 	}
 
-	private void guardarPuntuacion(String puntuacion) throws IOException,
-			ServletException {
-		administrador.registrarPuntuacion(puntuacion);
+	private void guardarPuntuacion(String puntuacion, String palabra)
+			throws IOException, ServletException {
+		administrador.registrarPuntuacion(puntuacion, palabra);
 		response.sendRedirect("AhorcadoServlet");
 	}
 
@@ -115,12 +106,12 @@ public class UsersAdminServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		if (administrador.iniciarSesion(username, password)) {
+			response.sendRedirect("seleccionarNivel.html");
 			response.getWriter().println(
 					"Usuario autentificado correctamente<br>");
-			response.sendRedirect("seleccionarNivel.html");
 		} else {
-			response.getWriter().println("Usuario o password inexistentes<br>");
 			response.sendRedirect("login.html");
+			response.getWriter().println("Usuario o password inexistentes<br>");
 		}
 	}
 
@@ -151,8 +142,8 @@ public class UsersAdminServlet extends HttpServlet {
 		if (administrador.getLoggedUser() != null) {
 			PrintWriter out = response.getWriter();
 			String error = request.getParameter("error");
-			if(error !=null){
-				if(error.equals("error"))
+			if (error != null) {
+				if (error.equals("error"))
 					out.println("Error al editar usuario </br>");
 				else
 					out.println("Debe llenar todos los campos</br>");

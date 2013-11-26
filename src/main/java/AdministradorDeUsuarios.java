@@ -73,10 +73,10 @@ public class AdministradorDeUsuarios {
 		}
 	}
 
-	public void registrarPuntuacion(String puntuacion) {
+	public void registrarPuntuacion(String puntuacion, String palabra) {
 		if (loggedUser != null) {
 			Puntuacion points = new Puntuacion(puntuacion,
-					loggedUser.getIdUsuario());
+					loggedUser.getIdUsuario(), palabra);
 			puntuaciones.add(points);
 			points.serializar();
 		}
@@ -106,8 +106,9 @@ public class AdministradorDeUsuarios {
 	public String mostrarTodos() {
 		String res = "";
 		for (int i = 0; i < puntuaciones.size(); i++) {
-			res += puntuaciones.get(i).getIdUsuario() + ": "
-					+ puntuaciones.get(i).getPuntuacion() + "<br>";
+			res += puntuaciones.get(i).getPalabra() + ": "
+					+ puntuaciones.get(i).getPuntuacion() + " ("
+					+ puntuaciones.get(i).getIdUsuario() + ") <br>";
 		}
 		return res;
 	}
@@ -150,15 +151,17 @@ public class AdministradorDeUsuarios {
 	}
 
 	public void limpiarArchivoUsuarios() {
-		try {
-			FileOutputStream fileOut = new FileOutputStream("usuarios.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(usuarios.get(0));
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized data is saved in usuarios.ser");
-		} catch (IOException i) {
-			i.printStackTrace();
+		if (usuarios.size() > 0) {
+			try {
+				FileOutputStream fileOut = new FileOutputStream("usuarios.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(usuarios.get(0));
+				out.close();
+				fileOut.close();
+				System.out.println("Serialized data is saved in usuarios.ser");
+			} catch (IOException i) {
+				i.printStackTrace();
+			}
 		}
 	}
 
@@ -170,24 +173,30 @@ public class AdministradorDeUsuarios {
 	}
 
 	public void limpiarArchivoPuntuaciones() {
-		try {
-			FileOutputStream fileOut = new FileOutputStream("puntuaciones.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(puntuaciones.get(0));
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized data is saved in puntuaciones.ser");
-		} catch (IOException i) {
-			i.printStackTrace();
+		if (puntuaciones.size() > 0) {
+			try {
+				FileOutputStream fileOut = new FileOutputStream(
+						"puntuaciones.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(puntuaciones.get(0));
+				out.close();
+				fileOut.close();
+				System.out
+						.println("Serialized data is saved in puntuaciones.ser");
+			} catch (IOException i) {
+				i.printStackTrace();
+			}
 		}
 	}
 
 	public String buscarPuntuacionesUsuario(String userId) {
-		String res = "";
+		String res = "Puntuaciones de " + userId + ": <br>";
 		int total = 0;
 		for (int i = 0; i < puntuaciones.size(); i++) {
 			if (puntuaciones.get(i).getIdUsuario().equals(userId)) {
-				res += puntuaciones.get(i).getPuntuacion() + "<br>";
+				res += "Palabra: " + puntuaciones.get(i).getPalabra()
+						+ " Punuacion: " + puntuaciones.get(i).getPuntuacion()
+						+ "<br>";
 				total += Integer.parseInt(puntuaciones.get(i).getPuntuacion());
 			}
 		}

@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 
 public class Puntuacion implements java.io.Serializable {
 	private String puntuacion;
+	private String palabra;
 	private String idUsuario;
 
 	public Puntuacion() {
@@ -11,9 +12,18 @@ public class Puntuacion implements java.io.Serializable {
 		idUsuario = "";
 	}
 
-	public Puntuacion(String puntuacion, String idUsuario) {
+	public Puntuacion(String puntuacion, String idUsuario, String palabra) {
 		this.puntuacion = puntuacion;
 		this.idUsuario = idUsuario;
+		this.palabra = palabra;
+	}
+	
+	public String getPalabra() {
+		return palabra;
+	}
+
+	public void setPalabra(String palabra) {
+		this.palabra = palabra;
 	}
 
 	public String getIdUsuario() {
